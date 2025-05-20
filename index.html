@@ -11,38 +11,98 @@
       box-sizing: border-box;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
     body {
       background: #0f0f0f;
       color: #fff;
     }
+
     header {
       background: #1c1c1c;
       padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
+      z-index: 10;
       flex-wrap: wrap;
     }
+
     header h1 {
       font-size: 2rem;
       color: #a020f0;
     }
-    nav {
-      display: flex;
-      gap: 15px;
-    }
-    nav a {
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 10px 15px;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-    nav a:hover {
-      background: #a020f0;
-    }
-    .image-scroller {
+ /* Hide hamburger and mobile nav on big screens */
+.hamburger, #mobileNav {
+  display: none;
+}
+
+/* Show desktop nav on big screens */
+.nav-desktop {
+  display: flex;
+  gap: 15px;
+}
+
+/* Buttons style for desktop */
+.nav-desktop a {
+  padding: 10px 15px;
+  background: #a020f0;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+.nav-desktop a:hover {
+  background: #8600c9;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+  /* Hide desktop nav */
+  .nav-desktop {
+    display: none;
+  }
+  /* Show hamburger and mobile nav */
+  .hamburger {
+    display: block;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+  }
+  #mobileNav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    width: 220px;
+    background: #1c1c1c;
+    padding-top: 60px;
+    gap: 20px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+    z-index: 9999;
+  }
+  #mobileNav.nav-open {
+    transform: translateX(0);
+  }
+  /* Style mobile nav links as buttons */
+  #mobileNav a {
+    padding: 12px 20px;
+    background-color: #a020f0;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+  }
+  #mobileNav a:hover {
+    background-color: #8600c9;
+  }
+}
+      .image-scroller {
       width: 100%;
       max-width: 800px;
       margin: 0 auto 40px;
@@ -67,7 +127,8 @@
       75% { transform: translateX(-300%); }
       100% { transform: translateX(0); }
     }
-      .hall-of-flames {
+
+    .hall-of-flames {
       padding: 2em;
       text-align: center;
     }
@@ -105,31 +166,37 @@
       padding: 1em;
       background: #3a506b;
     }
+
     .about-us, .contact {
       padding: 40px 20px;
       background: #1a1a1a;
       margin-top: 40px;
     }
+
     .about-us h2, .contact h2 {
       color: #f4c10f;
       margin-bottom: 20px;
     }
+
     .about-us p {
       font-size: 1rem;
       color: #ccc;
       line-height: 1.6;
     }
+
     .contact form {
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
+
     .contact input, .contact textarea {
       padding: 10px;
       font-size: 1rem;
       border: none;
       border-radius: 5px;
     }
+
     .contact button {
       padding: 10px;
       font-size: 1rem;
@@ -140,38 +207,44 @@
       transition: background 0.3s;
       cursor: pointer;
     }
+
     .contact button:hover {
       background: yellow;
       color: black;
-    }
-    @media screen and (max-width: 768px) {
-      header {
-        flex-direction: column;
-        text-align: center;
-      }
-      nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-top: 10px;
-      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Premier League Central</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="DOCTYPE html.html" target="_blank">Tournament</a>
-      <a href="Player Statestics.html" target="_blank">Player Info</a>
-      <a href="player leaderboard.html" target="_blank">Player Leaderboard</a>
-      <a href="#about">About Us</a>
-      <a href="#contact">Contact Us</a>
-      <a href="statestic.html" target="_blank">Latest News</a>
-    </nav>
-  </header>
+  <h1>Premier League Central</h1>
 
-      <div class="image-scroller">
+  <!-- Hamburger only on mobile -->
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+  <!-- Horizontal nav for big screens -->
+  <nav class="nav-desktop">
+    <a href="#">Home</a>
+    <a href="DOCTYPE html.html" target="_blank">Tournament</a>
+    <a href="Player Statestics.html" target="_blank">Player Info</a>
+    <a href="player leaderboard.html" target="_blank">Leaderboard</a>
+    <a href="#about">About Us</a>
+    <a href="#contact">Contact Us</a>
+    <a href="#">Latest News</a>
+  </nav>
+
+  <!-- Sliding nav for mobile -->
+  <nav id="mobileNav" class="nav-closed">
+    <a href="#">Home</a>
+    <a href=""DOCTYPE html.html" target="_blank"">Tournament</a>
+    <a href="Player Statestics.html" target="_blank">Player Info</a>
+    <a href="player leaderboard.html" target="_blank">Leaderboard</a>
+    <a href="#about">About Us</a>
+    <a href="#contact">Contact Us</a>
+    <a href="statestic.html" target="_blank">Latest News</a>
+  </nav>
+</header>
+
+  <div class="image-scroller">
     <div class="slider">
       <img src="PPL Images/Garud_Commando_Team_1600x500.png" alt="Slide 1">
       <img src="PPL Images/Ghatak_Force_Team_1600x600.png" alt="Slide 2">
@@ -189,39 +262,43 @@
         <h3 class="player-info">Amit Kumar</h3>
          <div class="player-info">Amit Kumar - Amit Kumar became Player of the Match twice in PPL finals, showcasing strong batting and bowling performances. He played 55 matches with an MVP score of 16.890.</div>
       </div>
+
        <div class="player-card">
         <img src="PPL Images/Screenshot 2025-04-18 172318.png" alt="Prathamesh">
         <h3 class="player-info">Prathamesh</h3>
          <div class="player-info">Prathamesh - The player with the best overall stats based on MVP score is Prathamesh with a score of 19.514, indicating strong performance in both batting and bowling.</div>
       </div>
+
        <div class="player-card">
         <img src="PPL Images/Screenshot 2025-04-18 172205.png" alt="Shailendra Thakur">
         <h3 class="player-info">Shailendra Thakur</h3>
          <div class="player-info">Shailendra Thakur - Shailendra is a skilled batsman with 965 runs in 55 matches, showing consistent performance and a strong batting presence in the league. His ability to score runs efficiently makes him a valuable player for his team.</div>
       </div>
+
        <div class="player-card">
         <img src="PPL Images/Screenshot 2025-04-18 173813.png" alt="Vivek Awasthi">
         <h3 class="player-info">Vivek Awasthi</h3>
          <div class="player-info">Vivek Awasthi - Strong bowler with 4 wickets in finals, played 59 matches,He achieved an MVP score of 11.0288 and was named Player of the Match in PPL Season 12.</div>
       </div>
+
        <div class="player-card">
         <img src="PPL Images/Screenshot 2025-04-15 135201.png" alt="Akshay Modha">
         <h3 class="player-info">Akshay Modha</h3>
          <div class="player-info">Akshay Modha - Akshay Modha played 47 matches, scored 341 runs, bowled 5 overs at 10.141 economy, and won Player of the Match in PPL Seasons 7 and 8 finals with impactful batting and bowling.</div>
       </div>
+
        <div class="player-card">
         <img src="PPL Images/Screenshot 2025-04-18 130525.png" alt="Arjun">
         <h3 class="player-info">Arjun</h3>
         <div class="player-info">Arjun -Arjun has played 56 matches with 512 runs and is known for his balanced batting and bowling skills, maintaining an economy of 7.969. He is good at both batting and bowling, making him a valuable all-rounder.</div>
       </div>
+
     </div>
   </section>
 
   <section class="about-us" id="about">
     <h2>About Us</h2>
-    <p>Welcome to the official online hub of PPL Cricket Turf—your one-stop destination for everything cricket within the PPL community. Whether you're a passionate player, a dedicated team manager, an ardent fan, or someone simply in love with the sport, this platform is designed to be the digital heartbeat of your cricket journey. We don’t just report scores or post updates; we celebrate the essence of the game, one match at a time.
-
-Our website functions as a comprehensive ecosystem tailored specifically for PPL—a community-driven cricket league that brings excitement, competition, and camaraderie to local turf cricket like never before. Inspired by the dynamic and professional structure of leagues such as the IPL, PPL offers its own flavor of intense sporting spirit, and this website is where it all comes to life.</p>
+    <p>Welcome to the official online hub of PPL Cricket Turf—your one-stop destination for everything cricket within the PPL community. Whether you're a passionate player, a dedicated team manager, an ardent fan, or someone simply in love with the sport, this platform is designed to be the digital heartbeat of your cricket journey.</p>
   </section>
 
   <section class="contact" id="contact">
@@ -233,8 +310,32 @@ Our website functions as a comprehensive ecosystem tailored specifically for PPL
       <button type="submit">Send Message</button>
     </form>
   </section>
-<script
-  src='https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1'>
-</script>
+
+  <script>
+  function toggleMenu() {
+    const nav = document.getElementById('mobileNav');
+    nav.classList.toggle('nav-open');
+  }
+
+  // Close mobile menu on link click
+  document.querySelectorAll('#mobileNav a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('mobileNav').classList.remove('nav-open');
+    });
+  });
+  </script>
+  <!-- JotForm loads after scroll -->
+  <script>
+    let jotformLoaded = false;
+
+    window.addEventListener("scroll", function () {
+      if (!jotformLoaded && window.scrollY > 300) {
+        jotformLoaded = true;
+        const script = document.createElement("script");
+        script.src = "https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1";
+        document.body.appendChild(script);
+      }
+    });
+  </script>
 </body>
 </html>
