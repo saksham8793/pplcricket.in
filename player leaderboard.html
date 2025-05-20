@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Player Statistics</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #111;
+      color: #fff;
+    }
+
+    #contacts {
+      width: 100%;
+      min-height: 100vh;
+      background: url('PPL Images/1.png') no-repeat center center fixed;
+      background-size: cover;
+      padding: 60px 20px;
+    }
+
+    .contacts-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px;
+      border-radius: 16px;
+      backdrop-filter: blur(6px);
+    }
+
+    .leaderboard-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #00ffcc;
+      margin-top: -50px;
+      animation: twinkleGlow 1.5s infinite alternate;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1rem;
+      margin-bottom: 40px;
+      color: #ccc;
+      animation: twinkleGlow 1.5s infinite alternate;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    #searchBar {
+      font-size: 20px;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      padding: 10px;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropbtn {
+      padding: 12px 20px;
+      background: #00ffcc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      color: black;
+      width: 170px;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      z-index: 10;
+    }
+
+    .dropdown-content button {
+      padding: 10px 16px;
+      border: none;
+      width: 100%;
+      background: white;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .dropdown-content button:hover {
+      background: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .player-card {
+  display: flex;
+  flex-direction: row;
+  background: #ffffff;
+  color: #000;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 20px 0; /* Removed horizontal centering */
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap;
+}
+
+    .player-card:hover {
+      transform: scale(1.02);
+    }
+
+    .player-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .player-info {
+      padding: 16px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .player-info h3 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      color: #333;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    .stats span {
+      background: #f1f1f1;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+
+    .stats .highlight {
+      background: #ffd700;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .player-header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .player-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .player-actions a.link-button {
+      padding: 6px 12px;
+      background-color: #00ffcc;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .link-button:hover {
+      background-color: #00ccaa;
+    }
+
+    @keyframes twinkleGlow {
+      0% {
+        text-shadow: 0 0 5px #ffffff;
+      }
+      50% {
+        text-shadow: 0 0 10px #00ffff;
+      }
+      100% {
+        text-shadow: 0 0 15px #ff00ff;
+      }
+    }
+
+    .report-section {
+      padding: 60px 20px;
+      background: #222;
+      color: #fff;
+      text-align: center;
+    }
+
+    .report-section h1 {
+      font-size: 2.5rem;
+      color: #00ffcc;
+      margin-bottom: 20px;
+      animation: twinkleGlow 1.5s infinite alternate;
+    }
+
+    .report-form {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .form-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-wrapper input,
+    .form-wrapper textarea,
+    .form-wrapper button {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+    }
+
+    .form-wrapper textarea {
+      min-height: 120px;
+    }
+
+    .form-wrapper button {
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .form-wrapper button:hover {
+      background: #00ccaa;
+    }
+
+    @media (max-width: 768px) {
+      .player-card {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .player-card img {
+        width: 100%;
+        height: auto;
+      }
+
+      .dropbtn,
+      .dropdown-content {
+        margin-left: 0;
+      }
+
+      .leaderboard-title {
+        font-size: 2rem;
+      }
+
+      .report-section h1 {
+        font-size: 1.5rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      .player-info {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- your HTML body content remains unchanged (player cards, scripts, etc.) -->
+  <!-- CONTACT SECTION -->
+  <section id="contacts">
+    <div class="contacts-container">
+      <h1 class="leaderboard-title">Player Leaderboard</h1>
+      <br>
+      <br>
+      <br>
+      <br>
+      <p class="subtitle">Players are ranked by MVP Score. Explore their stats below.</p>
+
+      <!-- Search + Dropdown -->
+      <div class="controls">
+        <input
+          type="text"
+          id="searchBar"
+          onkeyup="searchPlayers()"
+          placeholder="Search by player name..."
+        />
+        <div class="dropdown">
+          <button class="dropbtn">Sort By ▼</button>
+          <div class="dropdown-content">
+            <button onclick="sortPlayers('Total Match')">Total Match</button>
+            <button onclick="sortPlayers('MVP Score')">MVP Score</button>
+            <button onclick="sortPlayers('Season Played')">Season Played</button>
+            <button onclick="sortPlayers('Total Runs')">Total Runs</button>
+            <button onclick="sortPlayers('Ball Faced')">Ball Faced</button>
+            <button onclick="sortPlayers('Overs')">Overs</button>
+            <button onclick="sortPlayers('Runs Given')">Runs Given</button>
+            <button onclick="sortPlayers('Total Wickets')">Total Wickets</button>
+            <button onclick="sortPlayers('Economy')">Economy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="player-card">
+  <img src="PPL Images/ad.png" alt="Abhishek Joshi" />
+     <div class="player-info">
+  <div class="player-header">
+  <h3>Ad Saurabh Saxena</h3>
+  <div class="player-actions">
+     <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ad Saurabh Saxena.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ad Saurabh Saxena.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ad Saurabh Saxena.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+</div>
+  <div class="stats">
+    <span>Total Match: 53</span>
+    <span>Season Played: 11</span>
+    <span>Total Runs: 439</span>
+    <span>Ball Faced: 406</span>
+    <span>Overs: 19</span>
+    <span>Runs Given: 188</span>
+    <span>Economy: 8.13</span>
+    <span>Total Wickets:14</span>
+    <span class="highlight">MVP Score: 6.47</span>
+     </div>
+    </div>
+   </div>
+
+<div class="player-card">
+  <img src="PPL Images/joshi.png" alt="Abhishek Joshi" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Abhishek Joshi</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Abhishek Joshi.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Abhishek Joshi.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Abhishek Joshi.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 46</span>
+      <span>Season Played: 9</span>
+      <span>Total Runs: 464</span>
+      <span>Ball Faced: 404</span>
+      <span>Overs: 38</span>
+      <span>Runs Given: 343</span>
+      <span>Economy: 10.84</span>
+      <span>Total Wickets:18</span>
+      <span class="highlight">MVP Score: 9.028375</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-15 210259.png" alt="Amit Rai" />
+  <div class="player-info">
+    <div class="player-header"> 
+    <h3>Amit Rai</h3>
+  <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Amit Rai.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Amit Rai.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Amit Rai.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 61</span>
+      <span>Season Played: 10</span>
+      <span>Total Runs: 470</span>
+      <span>Ball Faced: 391</span>
+      <span>Overs: 82.3</span>
+      <span>Runs Given: 558</span>
+      <span>Economy: 7.485</span>
+      <span>Total Wickets:30</span>
+      <span class="highlight">MVP Score: 10.7147</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-05-06 123934.png" alt="Amit Kumar" />
+  <div class="player-info">
+    <div class="player-header">
+    <h3>Amit Kumar</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Amit Kumar.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Amit Kumar.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Amit Kumar.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 55</span>
+      <span>Season Played: 9</span>
+      <span>Total Runs: 976</span>
+      <span>Ball Faced: 644</span>
+      <span>Overs: 49</span>
+      <span>Runs Given: 239</span>
+      <span>Economy: 4.307</span>
+      <span>Total Wickets:12</span>
+      <span class="highlight">MVP Score: 16.890</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-15 212647.png" alt="Aniket Desai" />
+  <div class="player-info">
+    <div class="player-header">	
+    <h3>Aniket Desai</h3>
+      <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aniket Desai.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aniket Desai.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aniket Desai.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 24</span>
+      <span>Season Played: 4</span>
+      <span>Total Runs: 198</span>
+      <span>Ball Faced: 182</span>
+      <span>Overs: 25</span>
+      <span>Runs Given: 205</span>
+      <span>Economy: 7.992</span>
+      <span>Total Wickets:10</span>
+      <span class="highlight">MVP Score: 9.87175</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-15 212918.png" alt="Aayush Bhatnagar" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Aayush Bhatnagar</h3>
+     <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aayush Bhatnaga.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aayush Bhatnaga.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aayush Bhatnaga.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 5</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 4</span>
+      <span>Ball Faced: 14</span>
+      <span>Overs: 3.3</span>
+      <span>Runs Given: 45</span>
+      <span>Economy: 12.86</span>
+       <span>Total Wickets:1</span>
+      <span class="highlight">MVP Score: 1.383</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-15 213802.png" alt="Aditya Upadhyaya" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Aditya Upadhyaya</h3>
+<div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aditya Upadhyaya.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aditya Upadhyaya.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aditya Upadhyaya.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 5</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 6</span>
+      <span>Ball Faced: 5</span>
+      <span>Overs: 3</span>
+      <span>Runs Given: 31</span>
+      <span>Economy: 10.33</span>
+       <span>Total Wickets:1</span>
+      <span class="highlight">MVP Score: 2.808</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-15 214345.png" alt="Akshay" />
+  <div class="player-info">
+   <div class="player-header">
+    <h3>Akshay</h3>
+   <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Akshay.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Akshay.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Akshay.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+     <div class="stats">
+      <span>Total Match: 10</span>
+      <span>Season Played: 2</span>
+      <span>Total Runs: 142</span>
+      <span>Ball Faced: 107</span>
+      <span>Overs: 11.5</span>
+      <span>Runs Given: 104</span>
+      <span>Economy: 9.96</span>
+      <span>Total Wickets:5</span>
+      <span class="highlight">MVP Score: 12.406</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-15 135201.png" alt="Akshay Modha" />
+  <div class="player-info">
+   <div class="player-header">
+    <h3>Akshay Modha</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Akshay Modha.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Akshay Modha.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Akshay Modha.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 47</span>
+      <span>Season Played: 8</span>
+      <span>Total Runs: 341</span>
+      <span>Ball Faced: 297</span>
+      <span>Overs: 5</span>
+      <span>Runs Given: 369</span>
+      <span>Economy: 10.141</span>
+      <span>Total Wickets:23</span>
+      <span class="highlight">MVP Score: 8.936</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-15 220847.png" alt="Akhilesh Shukla" />
+  <div class="player-info">
+   <div class="player-header">
+    <h3>Akhilesh Shukla</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Akhilesh Shukla.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Akhilesh Shukla.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Akhilesh Shukla.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 7</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 20</span>
+      <span>Ball Faced: 15</span>
+      <span>Overs: 11</span>
+      <span>Runs Given: 46</span>
+      <span>Economy: 4.18</span>
+      <span>Total Wickets:4</span>
+      <span class="highlight">MVP Score: 12.827</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-15 221303.png" alt="Aniket M" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Aniket M</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aniket M.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aniket M.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Aniket M.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 33</span>
+      <span>Season Played: 7</span>
+      <span>Total Runs: 340</span>
+      <span>Ball Faced: 302</span>
+      <span>Overs: 5</span>
+      <span>Runs Given: 104</span>
+      <span>Economy: 4.261</span>
+      <span>Total Wickets:1</span>
+      <span class="highlight">MVP Score: 7.341</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 130125.png" alt="Ankur Malviya" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Ankur Malviya</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ankur Malviya.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ankur Malviya.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ankur Malviya.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+      <div class="stats">
+      <span>Total Match: 25</span>
+      <span>Season Played: 4</span>
+      <span>Total Runs: 84</span>
+      <span>Ball Faced: 85</span>
+      <span>Overs: 27.3</span>
+      <span>Runs Given: 147</span>
+      <span>Economy: 5.51</span>
+      <span>Total Wickets:14</span>
+      <span class="highlight">MVP Score: 8.61725</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 130525.png" alt="Arjun" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Arjun</h3>
+   <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Arjun.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Arjun.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Arjun.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 56</span>
+      <span>Season Played: 11</span>
+      <span>Total Runs: 512</span>
+      <span>Ball Faced: 475</span>
+      <span>Overs: 59</span>
+      <span>Runs Given: 483</span>
+      <span>Economy: 7.969</span>
+      <span>Total Wickets:17</span>
+      <span class="highlight">MVP Score: 8.450</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 131821.png" alt="Ashish Chawhan" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Ashish Chawhan</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ashish Chawhan.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ashish Chawhan.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ashish Chawhan.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 38</span>
+      <span>Season Played: 6</span>
+      <span>Total Runs: 508</span>
+      <span>Ball Faced: 379</span>
+      <span>Overs: 39.5</span>
+      <span>Runs Given: 338</span>
+      <span>Economy: 8.851</span>
+      <span>Total Wickets:19</span>
+      <span class="highlight">MVP Score: 14.076</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 132035.png" alt="Ashish Shrivastava" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Ashish Shrivastava</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ashish Shrivastava.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ashish Shrivastava.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Ashish Shrivastava.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 7</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 19</span>
+      <span>Ball Faced: 32</span>
+      <span>Overs: 5.1</span>
+      <span>Runs Given: 45</span>
+      <span>Economy: 8.71</span>
+      <span>Total Wickets:4</span>
+      <span class="highlight">MVP Score: 10.735</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 130916.png" alt="Bel Anjan Bhai" />
+  <div class="player-info">
+    <div class="player-header">
+    <h3>Bel Anjan Bhai</h3>
+     <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Bel Anjan Bhai.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Bel Anjan Bhai.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Bel Anjan Bhai.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 27</span>
+      <span>Season Played: 7</span>
+      <span>Total Runs: 169</span>
+      <span>Ball Faced: 177</span>
+      <span>Overs: 32</span>
+      <span>Runs Given: 250</span>
+      <span>Economy: 5.426</span>
+      <span>Total Wickets:15</span>
+      <span class="highlight">MVP Score: 8.6766</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 132633.png" alt="Bharat" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Bharat</h3>
+      <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Bharat.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Bharat.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Bharat.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 24</span>
+      <span>Season Played: 4</span>
+      <span>Total Runs: 92</span>
+      <span>Ball Faced: 100</span>
+      <span>Overs: 22.5</span>
+      <span>Runs Given: 142</span>
+      <span>Economy: 6.412</span>
+      <span>Total Wickets:15</span>
+      <span class="highlight">MVP Score: 8.293</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 134107.png" alt="Bharmal Ram Vishnoi" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Bharmal Ram Vishnoi</h3>
+     <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Bharmal Ram Vishnoi.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Bharmal Ram Vishnoi.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Bharmal Ram Vishnoi.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 24</span>
+      <span>Season Played: 4</span>
+      <span>Total Runs: 17</span>
+      <span>Ball Faced: 28</span>
+      <span>Overs: 2.5</span>
+      <span>Runs Given: 22</span>
+      <span>Economy: 4.606</span>
+      <span>Total Wickets:2</span>
+      <span class="highlight">MVP Score: 3.0995</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 134517.png" alt="Deepak" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Deepak</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Deepak.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Deepak.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Deepak.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 51</span>
+      <span>Season Played: 9</span>
+      <span>Total Runs: 175</span>
+      <span>Ball Faced: 181</span>
+      <span>Overs: 58</span>
+      <span>Runs Given: 433</span>
+      <span>Economy: 8.162</span>
+      <span>Total Wickets:33</span>
+      <span class="highlight">MVP Score: 6.9826</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 145550.png" alt="Dr Mahesh Rohine" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Dr Mahesh Rohine</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Dr Mahesh Rohine.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Dr Mahesh Rohine.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Dr Mahesh Rohine.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 39</span>
+      <span>Season Played: 7</span>
+      <span>Total Runs: 339</span>
+      <span>Ball Faced: 321</span>
+      <span>Overs: 53</span>
+      <span>Runs Given: 369</span>
+      <span>Economy: 7.15</span>
+      <span>Total Wickets:23</span>
+      <span class="highlight">MVP Score: 10.851</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 151021.png" alt="Girish P" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Girish P</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Girish P.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Girish P.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Girish P.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 6</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 45</span>
+      <span>Ball Faced: 43</span>
+      <span>Overs: 0</span>
+      <span>Runs Given: 0</span>
+      <span>Economy: 0</span>
+      <span>Total Wickets:0</span>
+      <span class="highlight">MVP Score: 5.755</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 151202.png" alt="Harsh Rana" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Harsh Rana</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Harsh Rana.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Harsh Rana.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Harsh Rana.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 12</span>
+      <span>Season Played: 2</span>
+      <span>Total Runs: 62</span>
+      <span>Ball Faced: 55</span>
+      <span>Overs: 6</span>
+      <span>Runs Given: 58</span>
+      <span>Economy: 4.835</span>
+      <span>Total Wickets:8</span>
+      <span class="highlight">MVP Score: 12.791</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 151414.png" alt="Himanshu C" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Himanshu C</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Himanshu C.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Himanshu C.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Himanshu C.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 47</span>
+      <span>Season Played: 9</span>
+      <span>Total Runs: 51</span>
+      <span>Ball Faced: 55</span>
+      <span>Overs: 57.5</span>
+      <span>Runs Given: 391</span>
+      <span>Economy: 6.917</span>
+      <span>Total Wickets:15</span>
+      <span class="highlight">MVP Score: 4.448875</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/2.png" alt="Jayraj Kharat" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Jayraj Kharat</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Jayraj Kharat.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Jayraj Kharat.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Jayraj Kharat.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 17</span>
+      <span>Season Played: 3</span>
+      <span>Total Runs: 111</span>
+      <span>Ball Faced: 114</span>
+      <span>Overs: 19</span>
+      <span>Runs Given: 111</span>
+      <span>Economy: 5.856</span>
+      <span>Total Wickets:7</span>
+      <span class="highlight">MVP Score: 8.973</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 152954.png" alt="Krishna Kumar" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Krishna Kumar</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Krishna Kumar.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Krishna Kumar.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Krishna Kumar.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 42</span>
+      <span>Season Played: 9</span>
+      <span>Total Runs: 48</span>
+      <span>Ball Faced: 82</span>
+      <span>Overs: 43.5</span>
+      <span>Runs Given: 385</span>
+      <span>Economy: 7.027</span>
+      <span>Total Wickets:17</span>
+      <span class="highlight">MVP Score: 3.926</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 153722.png" alt="Krishna Rajput" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Krishna Rajput</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Krishna Rajput.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Krishna Rajput.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Krishna Rajput.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 5</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 15</span>
+      <span>Ball Faced: 30</span>
+      <span>Overs: 4</span>
+      <span>Runs Given: 22</span>
+      <span>Economy: 5.5</span>
+      <span>Total Wickets:2</span>
+      <span class="highlight">MVP Score: 4.922</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 154121.png" alt="Mangesh Nikumbh" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Mangesh Nikumbh</h3>
+     <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Mangesh Nikumbh.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Mangesh Nikumbh.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Mangesh Nikumbh.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 24</span>
+      <span>Season Played: 6</span>
+      <span>Total Runs: 87</span>
+      <span>Ball Faced: 86</span>
+      <span>Overs: 16</span>
+      <span>Runs Given: 190</span>
+      <span>Economy: 11.711</span>
+      <span>Total Wickets:9</span>
+      <span class="highlight">MVP Score: 3.8635</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 154558.png" alt="Mohit Mathur" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Mohit Mathur</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Mohit Mathur.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Mohit Mathur.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Mohit Mathur.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 17</span>
+      <span>Season Played: 3</span>
+      <span>Total Runs: 172</span>
+      <span>Ball Faced: 174</span>
+      <span>Overs: 20</span>
+      <span>Runs Given: 166</span>
+      <span>Economy: 8.4</span>
+      <span>Total Wickets:7</span>
+      <span class="highlight">MVP Score: 14.7295</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 164255.png" alt="Mopendra Kumar Athe" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Mopendra Kumar Athe</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Mopendra Kumar Athe.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Mopendra Kumar Athe.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Mopendra Kumar Athe.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 27</span>
+      <span>Season Played: 5</span>
+      <span>Total Runs: 21</span>
+      <span>Ball Faced: 18</span>
+      <span>Overs: 1</span>
+      <span>Runs Given: 6</span>
+      <span>Economy: 1.2</span>
+      <span>Total Wickets:0</span>
+      <span class="highlight">MVP Score: 2.2715</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 170016.png" alt="Narendra Gondagare" />
+  <div class="player-info">
+    <div class="player-header">
+    <h3>Narendra Gondagare</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Narendra Gondagare.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Narendra Gondagare.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Narendra Gondagare.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 62</span>
+      <span>Season Played: 11</span>
+      <span>Total Runs: 247</span>
+      <span>Ball Faced: 298</span>
+      <span>Overs: 30.3</span>
+      <span>Runs Given: 313</span>
+      <span>Economy: 7.388</span>
+      <span>Total Wickets:12</span>
+      <span class="highlight">MVP Score: 4.999818</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 170222.png" alt="Naveen Battini" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Naveen Battini</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Naveen Battini.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Naveen Battini.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Naveen Battini.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 7</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 42</span>
+      <span>Ball Faced: 46</span>
+      <span>Overs: 6.1</span>
+      <span>Runs Given: 34</span>
+      <span>Economy: 5.51</span>
+      <span>Total Wickets:4</span>
+      <span class="highlight">MVP Score: 9.879</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 170325.png" alt="Nishal Gupta" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Nishal Gupta</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Nishal Gupta.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Nishal Gupta.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Nishal Gupta.xlsx" class="link-button" download>Fielding</a>
+  </div>
+</div>
+    <div class="stats">
+      <span>Total Match: 52</span>
+      <span>Season Played: 9</span>
+      <span>Total Runs: 610</span>
+      <span>Ball Faced: 506</span>
+      <span>Overs: 41.2</span>
+      <span>Runs Given: 344</span>
+      <span>Economy: 8.302</span>
+      <span>Total Wickets:27</span>
+      <span class="highlight">MVP Score: 11.72489</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 170455.png" alt="Nitin Khare" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Nitin Khare</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Nitin Khare.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Nitin Khare.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Nitin Khare.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 51</span>
+      <span>Season Played: 9</span>
+      <span>Total Runs: 184</span>
+      <span>Ball Faced: 153</span>
+      <span>Overs: 53.3</span>
+      <span>Runs Given: 343</span>
+      <span>Economy: 6.447</span>
+      <span>Total Wickets:28</span>
+      <span class="highlight">MVP Score: 7.463111</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 170814.png" alt="Paritosh Sagade" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Paritosh Sagade</h3>
+   <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Paritosh Sagade.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Paritosh Sagade.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Paritosh Sagade.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 6</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 7</span>
+      <span>Ball Faced: 22</span>
+      <span>Overs: 5</span>
+      <span>Runs Given: 53</span>
+      <span>Economy: 10.6</span>
+      <span>Total Wickets:0</span>
+      <span class="highlight">MVP Score: 1.964</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 171053.png" alt="Yash Saxena" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Yash Saxena</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Yash Saxena.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Yash Saxena.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Yash Saxena.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 37</span>
+      <span>Season Played: 6</span>
+      <span>Total Runs: 147</span>
+      <span>Ball Faced: 162</span>
+      <span>Overs: 32</span>
+      <span>Runs Given: 258</span>
+      <span>Economy: 6.668</span>
+      <span>Total Wickets:13</span>
+      <span class="highlight">MVP Score: 5.825</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 171225.png" alt="Vishal K" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Vishal K</h3>
+   <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Vishal K.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Vishal K.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Vishal K.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 66</span>
+      <span>Season Played: 11</span>
+      <span>Total Runs: 371</span>
+      <span>Ball Faced: 346</span>
+      <span>Overs: 24.4</span>
+      <span>Runs Given: 211</span>
+      <span>Economy: 5.070</span>
+      <span>Total Wickets:22</span>
+      <span class="highlight">MVP Score: 6.564636</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 171342.png" alt="Tilak Asopa" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Tilak Asopa</h3>
+   <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Tilak Asopa.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Tilak Asopa.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Tilak Asopa.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 50</span>
+      <span>Season Played: 9</span>
+      <span>Total Runs: 172</span>
+      <span>Ball Faced: 204</span>
+      <span>Overs: 36</span>
+      <span>Runs Given: 307</span>
+      <span>Economy: 7.933</span>
+      <span>Total Wickets:17</span>
+      <span class="highlight">MVP Score: 6.160375</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 171505.png" alt="Vishal Narendra" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Vishal Narendra</h3>
+   <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Vishal Narendra.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Vishal Narendra.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Vishal Narendra.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 29</span>
+      <span>Season Played: 5</span>
+      <span>Total Runs: 109</span>
+      <span>Ball Faced: 78</span>
+      <span>Overs: 12</span>
+      <span>Runs Given: 129</span>
+      <span>Economy: 6.66</span>
+      <span>Total Wickets:3</span>
+      <span class="highlight">MVP Score: 3.8472</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 171622.png" alt="Virender Singh Negi" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Virender Singh Negi</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Virender Singh Negi.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Virender Singh Negi.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Virender Singh Negi.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 34</span>
+      <span>Season Played: 5</span>
+      <span>Total Runs: 287</span>
+      <span>Ball Faced: 249</span>
+      <span>Overs: 47</span>
+      <span>Runs Given: 346</span>
+      <span>Economy: 7.52</span>
+      <span>Total Wickets:10</span>
+      <span class="highlight">MVP Score: 10.3996</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 171814.png" alt="Shubham Singh" />
+  <div class="player-info">
+   <div class="player-header">
+    <h3>Shubham Singh</h3>
+     <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Shubham Singh.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Shubham Singh.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Shubham Singh.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 43</span>
+      <span>Season Played: 7</span>
+      <span>Total Runs: 562</span>
+      <span>Ball Faced: 434</span>
+      <span>Overs: 42.3</span>
+      <span>Runs Given: 284</span>
+      <span>Economy: 6.52</span>
+      <span>Total Wickets:15</span>
+      <span class="highlight">MVP Score: 15.036</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 172205.png" alt="Shailendra Thakur" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Shailendra Thakur</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Shailendra Thakur.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Shailendra Thakur.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Shailendra Thakur.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 55</span>
+      <span>Season Played: 11</span>
+      <span>Total Runs: 965</span>
+      <span>Ball Faced: 689</span>
+      <span>Overs: 25.5</span>
+      <span>Runs Given: 262</span>
+      <span>Economy: 10.038</span>
+      <span>Total Wickets:19</span>
+      <span class="highlight">MVP Score: 12.6328</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 172318.png" alt="Prathamesh" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Prathamesh</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Prathamesh.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Prathamesh.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Prathamesh.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 39</span>
+      <span>Season Played: 6</span>
+      <span>Total Runs: 871</span>
+      <span>Ball Faced: 511</span>
+      <span>Overs: 44</span>
+      <span>Runs Given: 392</span>
+      <span>Economy: 8.96</span>
+      <span>Total Wickets:10</span>
+      <span class="highlight">MVP Score: 19.514</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 172411.png" alt="Salim Shaikh" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Salim Shaikh</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Salim Shaikh.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Salim Shaikh.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Salim Shaikh.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 15</span>
+      <span>Season Played: 3</span>
+      <span>Total Runs: 37</span>
+      <span>Ball Faced: 37</span>
+      <span>Overs: 15</span>
+      <span>Runs Given: 125</span>
+      <span>Economy: 8.225</span>
+      <span>Total Wickets:6</span>
+      <span class="highlight">MVP Score: 5.938</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 172512.png" alt="Sanket Kherdikar" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Sanket Kherdikar</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Sanket Kherdikar.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Sanket Kherdikar.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Sanket Kherdikar.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 37</span>
+      <span>Season Played: 7</span>
+      <span>Total Runs: 81</span>
+      <span>Ball Faced: 92</span>
+      <span>Overs: 24</span>
+      <span>Runs Given: 267</span>
+      <span>Economy: 12.476</span>
+      <span>Total Wickets:6</span>
+      <span class="highlight">MVP Score: 2.445</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 172604.png" alt="Surendra Kushwah" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Surendra Kushwah</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Surendra Kushwah.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Surendra Kushwah.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Surendra Kushwah.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 37</span>
+      <span>Season Played: 7</span>
+      <span>Total Runs: 81</span>
+      <span>Ball Faced: 92</span>
+      <span>Overs: 74.3</span>
+      <span>Runs Given: 568</span>
+      <span>Economy: 7.513</span>
+      <span>Total Wickets:24</span>
+      <span class="highlight">MVP Score: 2.445</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 172643.png" alt="Saurabh G" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Saurabh G</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Saurabh G.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Saurabh G.xlsx" class="link-button" download>Bowling</a>
+    <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Saurabh G.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 52</span>
+      <span>Season Played: 8</span>
+      <span>Total Runs: 71</span>
+      <span>Ball Faced: 120</span>
+      <span>Overs: 39.2</span>
+      <span>Runs Given: 389</span>
+      <span>Economy: 11.436</span>
+      <span>Total Wickets:15</span>
+      <span class="highlight">MVP Score: 4.41225</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 172829.png" alt="Saksham Maheshwari" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Saksham Maheshwari</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Saksham Maheshwari.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Saksham Maheshwari.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Saksham Maheshwari.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 21</span>
+      <span>Season Played: 3</span>
+      <span>Total Runs: 140</span>
+      <span>Ball Faced: 123</span>
+      <span>Overs: 21</span>
+      <span>Runs Given: 148</span>
+      <span>Economy: 7.196</span>
+      <span>Total Wickets:13</span>
+      <span class="highlight">MVP Score: 13.981</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 173005.png" alt="Rajveer" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Rajveer</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Rajveer.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Rajveer.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Rajveer.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 19</span>
+      <span>Season Played: 3</span>
+      <span>Total Runs: 64</span>
+      <span>Ball Faced: 63</span>
+      <span>Overs: 27</span>
+      <span>Runs Given: 171</span>
+      <span>Economy: 6.356</span>
+      <span>Total Wickets:10</span>
+      <span class="highlight">MVP Score: 10.623</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 173219.png" alt="Sriniwasrao Kandimalla" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Sriniwasrao Kandimalla</h3>
+   <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Sriniwasrao Kandimalla.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Sriniwasrao Kandimalla.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Sriniwasrao Kandimalla.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 16</span>
+      <span>Season Played: 3</span>
+      <span>Total Runs: 24</span>
+      <span>Ball Faced: 45</span>
+      <span>Overs: 10.2</span>
+      <span>Runs Given: 104</span>
+      <span>Economy: 9.493</span>
+      <span>Total Wickets:6</span>
+      <span class="highlight">MVP Score: 4.595333333</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 173300.png" alt="Sarvesh Purohit" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Sarvesh Purohit</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Sarvesh Purohit.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Sarvesh Purohit.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Sarvesh Purohit.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 5</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 5</span>
+      <span>Ball Faced: 12</span>
+      <span>Overs: 4</span>
+      <span>Runs Given: 27</span>
+      <span>Economy: 6.75</span>
+      <span>Total Wickets:2</span>
+      <span class="highlight">MVP Score: 4.29</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 173519.png" alt="Shashi Shekhar" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Shashi Shekhar</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Shashi Shekhar.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Shashi Shekhar.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Shashi Shekhar.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 11</span>
+      <span>Season Played: 2</span>
+      <span>Total Runs: 37</span>
+      <span>Ball Faced: 85</span>
+      <span>Overs: 7</span>
+      <span>Runs Given: 34</span>
+      <span>Economy: 2.43</span>
+      <span>Total Wickets:2</span>
+      <span class="highlight">MVP Score: 4.3325</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 173706.png" alt="Tanuj Shah" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Tanuj Shah</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Tanuj Shah.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Tanuj Shah.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Tanuj Shah.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 18</span>
+      <span>Season Played: 3</span>
+      <span>Total Runs: 9</span>
+      <span>Ball Faced: 37</span>
+      <span>Overs: 11</span>
+      <span>Runs Given: 99</span>
+      <span>Economy: 6.793</span>
+      <span>Total Wickets:5</span>
+      <span class="highlight">MVP Score: 2.72</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 173813.png" alt="Vivek Awasthi" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Vivek Awasthi</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Vivek Awasthi.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Vivek Awasthi.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\Vivek Awasthi.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 59</span>
+      <span>Season Played: 10</span>
+      <span>Total Runs: 493</span>
+      <span>Ball Faced: 451</span>
+      <span>Overs: 94.4</span>
+      <span>Runs Given: 599</span>
+      <span>Economy: 6.656</span>
+      <span>Total Wickets:31</span>
+      <span class="highlight">MVP Score: 11.0288</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Ameya Shelke" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Ameya Shelke</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Ameya Shelke.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Ameya Shelke.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Ameya Shelke.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 5</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 31</span>
+      <span>Ball Faced: 30</span>
+      <span>Overs: 2</span>
+      <span>Runs Given: 12</span>
+      <span>Economy: 6</span>
+      <span>Total Wickets:1</span>
+      <span class="highlight">MVP Score: 4.325</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Amol Gawali" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Amol Gawali</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Amol Gawali.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Amol Gawali.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Amol Gawali.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 11</span>
+      <span>Season Played: 2</span>
+      <span>Total Runs: 152</span>
+      <span>Ball Faced: 94</span>
+      <span>Overs: 15.4</span>
+      <span>Runs Given: 96</span>
+      <span>Economy: 6.15</span>
+      <span>Total Wickets:5</span>
+      <span class="highlight">MVP Score: 12.3925</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Ashish B" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Ashish B</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Ashish B.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Ashish B.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Ashish B.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 4</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 0</span>
+      <span>Ball Faced: 3</span>
+      <span>Overs: 1</span>
+      <span>Runs Given: 1</span>
+      <span>Economy: 1</span>
+      <span>Total Wickets:0</span>
+      <span class="highlight">MVP Score: 0.5</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Bhupendra Bhadoriya" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Bhupendra Bhadoriya</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Bhupendra Bhadoriya.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Bhupendra Bhadoriya.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Bhupendra Bhadoriya.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 48</span>
+      <span>Season Played: 8</span>
+      <span>Total Runs: 16</span>
+      <span>Ball Faced: 28</span>
+      <span>Overs: 10.2</span>
+      <span>Runs Given: 129</span>
+      <span>Economy: 7.735</span>
+      <span>Total Wickets:3</span>
+      <span class="highlight">MVP Score: 1.891</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Dhiraj" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Dhiraj</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Dhiraj.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Dhiraj.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Dhiraj.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 48</span>
+      <span>Season Played: 8</span>
+      <span>Total Runs: 16</span>
+      <span>Ball Faced: 28</span>
+      <span>Overs: 7</span>
+      <span>Runs Given: 56</span>
+      <span>Economy: 4.0825</span>
+      <span>Total Wickets:6</span>
+      <span class="highlight">MVP Score: 1.891</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Gaurav Palherkar Amdocs Cricket" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Gaurav Palherkar </h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Gaurav Palherkar.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Gaurav Palherkar.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Gaurav Palherkar.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 37</span>
+      <span>Season Played: 7</span>
+      <span>Total Runs: 74</span>
+      <span>Ball Faced: 81</span>
+      <span>Overs: 39.4</span>
+      <span>Runs Given: 373</span>
+      <span>Economy: 9.576</span>
+      <span>Total Wickets:16</span>
+      <span class="highlight">MVP Score: 5.990</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Gaurav Soni" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Gaurav Soni</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Gaurav Soni.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Gaurav Soni.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Gaurav Soni.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 17</span>
+      <span>Season Played: 3</span>
+      <span>Total Runs: 10</span>
+      <span>Ball Faced: 38</span>
+      <span>Overs: 11.3</span>
+      <span>Runs Given: 103</span>
+      <span>Economy: 9.32</span>
+      <span>Total Wickets:4</span>
+      <span class="highlight">MVP Score: 2.963</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Mohit Mishra" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Mohit Mishra</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Mohit Mishra.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Mohit Mishra.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Mohit Mishra.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 4</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 6</span>
+      <span>Ball Faced: 15</span>
+      <span>Overs: 0</span>
+      <span>Runs Given: 0</span>
+      <span>Economy: 0</span>
+      <span>Total Wickets:0</span>
+      <span class="highlight">MVP Score: 2.76</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/Screenshot 2025-04-18 154318.png" alt="Mohit Saxena" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Mohit Saxena</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Mohit Saxena.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Mohit Saxena.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Mohit Saxena.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 40</span>
+      <span>Season Played: 7</span>
+      <span>Total Runs: 77</span>
+      <span>Ball Faced: 113</span>
+      <span>Overs: 1855.8</span>
+      <span>Runs Given: 465</span>
+      <span>Economy: 8.322</span>
+      <span>Total Wickets:17</span>
+      <span class="highlight">MVP Score: 4.891</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Naveen" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Naveen</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Naveen.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Naveen.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Naveen.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 50</span>
+      <span>Season Played: 8</span>
+      <span>Total Runs: 411</span>
+      <span>Ball Faced: 323</span>
+      <span>Overs: 25</span>
+      <span>Runs Given: 214</span>
+      <span>Economy: 8.434</span>
+      <span>Total Wickets:12</span>
+      <span class="highlight">MVP Score: 9.382</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Og" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Og</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Og.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Og.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Og.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 29</span>
+      <span>Season Played: 5</span>
+      <span>Total Runs: 148</span>
+      <span>Ball Faced: 115</span>
+      <span>Overs: 30.5</span>
+      <span>Runs Given: 319</span>
+      <span>Economy: 10.584</span>
+      <span>Total Wickets:8</span>
+      <span class="highlight">MVP Score: 7.163</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Omkar New Cricket" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Omkar New Cricket</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Omkar New Cricket.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Omkar New Cricket.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Omkar New Cricket.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 3</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 0</span>
+      <span>Ball Faced: 0</span>
+      <span>Overs: 1</span>
+      <span>Runs Given: 5</span>
+      <span>Economy: 4</span>
+      <span>Total Wickets:0</span>
+      <span class="highlight">MVP Score: 0.706</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Prashant Pandey" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Prashant Pandey</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Prashant Pandey.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Prashant Pandey.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Prashant Pandey.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 54</span>
+      <span>Season Played: 11</span>
+      <span>Total Runs: 400</span>
+      <span>Ball Faced: 341</span>
+      <span>Overs: 74</span>
+      <span>Runs Given: 506</span>
+      <span>Economy: 7.306</span>
+      <span>Total Wickets:23</span>
+      <span class="highlight">MVP Score: 9.824</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Prashant S" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Prashant S</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Prashant S.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Prashant S.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Prashant S.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 54</span>
+      <span>Season Played: 9</span>
+      <span>Total Runs: 509</span>
+      <span>Ball Faced: 433</span>
+      <span>Overs: 47.2</span>
+      <span>Runs Given: 413</span>
+      <span>Economy: 8.773</span>
+      <span>Total Wickets:14</span>
+      <span class="highlight">MVP Score: 8.736</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Rohit Narwani" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Rohit Narwani</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Rohit Narwani.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Rohit Narwani.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Rohit Narwani.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 17</span>
+      <span>Season Played: 3</span>
+      <span>Total Runs: 119</span>
+      <span>Ball Faced: 122</span>
+      <span>Overs: 14</span>
+      <span>Runs Given: 116</span>
+      <span>Economy: 8.75</span>
+      <span>Total Wickets:5</span>
+      <span class="highlight">MVP Score: 7.694</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Sagar C" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Sagar C</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Sagar C.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Sagar C.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Sagar C.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 58</span>
+      <span>Season Played: 10</span>
+      <span>Total Runs: 150</span>
+      <span>Ball Faced: 171</span>
+      <span>Overs: 19.4</span>
+      <span>Runs Given: 184</span>
+      <span>Economy: 6.167</span>
+      <span>Total Wickets:11</span>
+      <span class="highlight">MVP Score: 4.802</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Tilak 33kk" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Tilak 33kk</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Tilak 33kk.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Tilak 33kk.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Tilak 33kk.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 14</span>
+      <span>Season Played: 2</span>
+      <span>Total Runs: 5</span>
+      <span>Ball Faced: 15</span>
+      <span>Overs: 10</span>
+      <span>Runs Given: 132</span>
+      <span>Economy: 12.665</span>
+      <span>Total Wickets:4</span>
+      <span class="highlight">MVP Score: 4.802</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-card">
+  <img src="PPL Images/player.png" alt="Vishal Gir" />
+  <div class="player-info">
+  <div class="player-header">
+    <h3>Vishal Gir</h3>
+    <div class="player-actions">
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Vishal Gir.xlsx" class="link-button" download>Batting</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Vishal Gir.xlsx" class="link-button" download>Bowling</a>
+     <a href="C:\Users\Shailendra Thakur\Desktop\PPL\PPL Season's\player info with totals and averages\>Vishal Gir.xlsx" class="link-button" download>Fielding</a>
+  </div>
+ </div>
+    <div class="stats">
+      <span>Total Match: 4</span>
+      <span>Season Played: 1</span>
+      <span>Total Runs: 12</span>
+      <span>Ball Faced: 16</span>
+      <span>Overs: 7</span>
+      <span>Runs Given: 37</span>
+      <span>Economy: 5.29</span>
+      <span>Total Wickets:2</span>
+      <span class="highlight">MVP Score: 3.906</span>
+    </div>
+  </div>
+</div>
+       
+      </div>
+    </div>
+  </section>
+<script>
+ function searchPlayers() {
+    const input = document.getElementById("searchBar").value.toLowerCase();
+    const cards = document.getElementsByClassName("player-card");
+
+    for (let i = 0; i < cards.length; i++) {
+      const name = cards[i].querySelector("h3").textContent.toLowerCase();
+      if (name.includes(input)) {
+        cards[i].style.display = "flex";
+      } else {
+        cards[i].style.display = "none";
+      }
+    }
+  }
+    function sortPlayers(statName) {
+  const container = document.querySelector('.contacts-container');
+  const cards = Array.from(document.querySelectorAll('.player-card'));
+
+  const getStatValue = (card) => {
+    const stats = card.querySelectorAll('.stats span');
+    for (let stat of stats) {
+      if (stat.textContent.startsWith(statName)) {
+        const value = stat.textContent.split(':')[1].trim();
+        return parseFloat(value.replace(/[^\d.]/g, '')) || 0;
+      }
+    }
+    return 0;
+  };
+
+  cards.sort((a, b) => getStatValue(b) - getStatValue(a));
+
+  // Remove and re-add cards in new order
+  cards.forEach(card => container.appendChild(card));
+}
+  </script>
+<section class="report-section">
+ <h1 class="Repoart Players">Report Incorrect Player Info With Proof</h1>
+  <form class="report-form">
+    <div class="form-wrapper">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea placeholder="Describe the issue or correction With proof like excle files or screenshoot or crickheros files." required></textarea>
+      <input type="file" class="file-upload" />
+      <button type="submit">Send Report</button>
+    </div>
+  </form>
+</section>
+
+<script
+  src='https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1'>
+</script>
+</body>
+</html>

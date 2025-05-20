@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player Statistics</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #1a1a40, #000000);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+    }
+
+    #Leaderboard {
+      padding: 2rem;
+    }
+
+    .Leaderboard-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .Leaderboard-header h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #ffea00;
+      text-shadow: 2px 2px 5px #000;
+    }
+
+    #playerSearch {
+      padding: 0.7rem;
+      width: 300px;
+      border-radius: 1rem;
+      border: none;
+      font-size: 1rem;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .player-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      padding: 0 1rem;
+    }
+
+    .player-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: fadeIn 0.8s ease-in-out;
+      position: relative;
+    }
+
+    .player-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(255, 255, 255, 0.4);
+    }
+
+    .player-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 0.5rem;
+      border: 3px solid #fff;
+    }
+
+    .player-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+      color: #fff;
+    }
+
+    textarea {
+      width: 100%;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      resize: none;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .player-card::before {
+      content: "PRO";
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #00ffcc;
+      color: #000;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      display: none;
+    }
+
+    .player-card[data-pro="true"]::before {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  .player-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .player-link:hover {
+    text-decoration: none;
+  }
+  </style>
+</head>
+<body>
+
+  <section id="Leaderboard">
+    <div class="Leaderboard-header">
+      <h1>Player Statistics</h1>
+      <input type="text" id="playerSearch" placeholder="Search player..." />
+    </div>
+    <div class="player-grid" id="playerGrid"></div>
+  </section>
+
+<script>
+  // Player search functionality
+  const players = [
+    "Aayush Bhatnagar","Abhishek Joshi","Ad Saurabh Saxena","Aditya Upadhyaya",
+    "Akshay","Akhilesh Shukla","Akshay Modha","Ameya Shelke","Amit Rai",
+    "Amol Gawali","Aniket Desai","Aniket M","Anjani Anjan","Ankur Malviya",
+    "Arjun","Arjun2","Ashish B","Ashish Chawhan","Ashish Shrivastava",
+    "Bel Anjan Bhai","Bharat","Bharmal Ram Vishnoi","Bhupendra Bhadoriya",
+    "Deepak","Dhiraj","Dr Mahesh Rohine","Dummy Tejas",
+    "Gaurav Palherkar Amdocs Cricket","GAURAV PALHERKAR soccer Pitch Cricket",
+    "Gaurav Soni","Girish P","Harsh Rana","Himanshu C","Jayraj Kharat",
+    "Krishna Kumar","Krishna Rajput","Laddu","Mangesh Nikumbh",
+    "Mohit Cric Amdocs","Mohit Mathur","Mohit Mishra","Mohit Saxena",
+    "Mopendra Kumar Athe","Narendra Gondagare","Naveen Battini","Naveen",
+    "Nishal Gupta","Nitin Khare","Og","Omkar New Cricket","Omkar",
+    "Paritosh Sagade","Patidev","Prashant Pandey","Prashant S","Prathamesh",
+    "Rajveer","Rohit Narwani","Sagar C","Saksham Maheshwari","Salim Shaikh",
+    "Sanket Kherdikar","Sarvesh Purohit","Saurabh G","Shailendra Thakur",
+    "Shashi Shekhar","Shubham Singh","Sriniwasrao Kandimalla","Surendra Kushwah",
+    "Tanuj Shah","Tilak 33kk","Tilak Asopa","Virender Singh Negi","Vishal Gir",
+    "Vishal K","Vishal Narendra","Vivek Awasthi","Yash Saxena","Amit Kumar"
+  ];
+
+  const playerImages = {
+    "Aayush Bhatnagar": "PPL Images/Screenshot 2025-04-15 212918.png",
+    "Abhishek Joshi": "PPL Images/joshi.png",
+    "Ad Saurabh Saxena": "PPL Images/ad.png",
+    "Aditya Upadhyaya": "PPL Images/Screenshot 2025-04-15 213802.png",
+    "Akshay": "PPL Images/Screenshot 2025-04-15 214345.png",
+    "Akhilesh Shukla": "PPL Images/Screenshot 2025-04-15 220847.png",
+    "Akshay Modha": "PPL Images/Screenshot 2025-04-15 135201.png",
+    "Amit Rai": "PPL Images/Screenshot 2025-04-15 210259.png",
+    "Aniket Desai": "PPL Images/Screenshot 2025-04-15 212647.png",
+    "Aniket M": "PPL Images/Screenshot 2025-04-15 221303.png",
+    "Anjani Anjan": "PPL Images/Screenshot 2025-04-18 130916.png",
+    "Ankur Malviya": "PPL Images/Screenshot 2025-04-18 130125.png",
+    "Arjun": "PPL Images/Screenshot 2025-04-18 130525.png",
+    "Ashish Chawhan": "PPL Images/Screenshot 2025-04-18 131821.png",
+    "Ashish Shrivastava": "PPL Images/Screenshot 2025-04-18 132035.png",
+    "Bel Anjan Bhai": "PPL Images/Screenshot 2025-04-18 130916.png",
+    "Bharat": "PPL Images/Screenshot 2025-04-18 132633.png",
+    "Bharmal Ram Vishnoi": "PPL Images/Screenshot 2025-04-18 134107.png",
+    "Deepak": "PPL Images/Screenshot 2025-04-18 134517.png",
+    "Dr Mahesh Rohine": "PPL Images/Screenshot 2025-04-18 145550.png",
+    "Girish P": "PPL Images/Screenshot 2025-04-18 151021.png",
+    "Harsh Rana": "PPL Images/Screenshot 2025-04-18 151202.png",
+    "Himanshu C": "PPL Images/Screenshot 2025-04-18 151414.png",
+    "Jayraj Kharat": "PPL Images/2.png",
+    "Krishna Kumar": "PPL Images/Screenshot 2025-04-18 152954.png",
+    "Krishna Rajput": "PPL Images/Screenshot 2025-04-18 153722.png",
+    "Mangesh Nikumbh": "PPL Images/Screenshot 2025-04-18 154121.png",
+    "Mohit Cric Amdocs": "PPL Images/Screenshot 2025-04-18 154318.png",
+    "Mohit Mathur": "PPL Images/Screenshot 2025-04-18 154558.png",
+    "Mopendra Kumar Athe": "PPL Images/Screenshot 2025-04-18 164255.png",
+    "Narendra Gondagare": "PPL Images/Screenshot 2025-04-18 170016.png",
+    "Naveen Battini": "PPL Images/Screenshot 2025-04-18 170222.png",
+    "Nishal Gupta": "PPL Images/Screenshot 2025-04-18 170325.png",
+    "Nitin Khare": "PPL Images/Screenshot 2025-04-18 170455.png",
+    "Paritosh Sagade": "PPL Images/Screenshot 2025-04-18 170814.png",
+    "Yash Saxena": "PPL Images/Screenshot 2025-04-18 171053.png",
+    "Vishal K": "PPL Images/Screenshot 2025-04-18 171225.png",
+    "Tilak Asopa": "PPL Images/Screenshot 2025-04-18 171342.png",
+    "Vishal Narendra": "PPL Images/Screenshot 2025-04-18 171505.png",
+    "Virender Singh Negi": "PPL Images/Screenshot 2025-04-18 171622.png",
+    "Shubham Singh": "PPL Images/Screenshot 2025-04-18 171814.png",
+    "Shailendra Thakur": "PPL Images/Screenshot 2025-04-18 172205.png",
+    "Prathamesh": "PPL Images/Screenshot 2025-04-18 172318.png",
+    "Salim Shaikh": "PPL Images/Screenshot 2025-04-18 172411.png",
+    "Sanket Kherdikar": "PPL Images/Screenshot 2025-04-18 172512.png",
+    "Surendra Kushwah": "PPL Images/Screenshot 2025-04-18 172604.png",
+    "Saurabh G": "PPL Images/Screenshot 2025-04-18 172643.png",
+    "Saksham Maheshwari": "PPL Images/Screenshot 2025-04-18 172829.png",
+    "Rajveer": "PPL Images/Screenshot 2025-04-18 173005.png",
+    "Sriniwasrao Kandimalla": "PPL Images/Screenshot 2025-04-18 173219.png",
+    "Sarvesh Purohit": "PPL Images/Screenshot 2025-04-18 173300.png",
+    "Shashi Shekhar": "PPL Images/Screenshot 2025-04-18 173519.png",
+    "Tanuj Shah": "PPL Images/Screenshot 2025-04-18 173706.png",
+    "Vivek Awasthi": "PPL Images/Screenshot 2025-04-18 173813.png",
+    "Amit Kumar": "PPL Images/Screenshot 2025-05-06 123934.png"
+  };
+
+  const grid = document.getElementById("playerGrid");
+
+ const playerDescriptions = {
+  "Aayush Bhatnagar": "Explosive opener with quick reflexes.",
+  "Abhishek Joshi": "Master of spin and cunning strategy.",
+  "Ad Saurabh Saxena": "All-rounder with fearless energy.",
+  "Aditya Upadhyaya": "Known for clutch performances in tough games.",
+  // Add more descriptions as needed...
+};
+
+players.forEach(name => {
+  const fileName = `player/${name}.html`;
+  const imageFile = playerImages[name] || "PPL Images/player.png";
+  const description = playerDescriptions[name] || "I am a player who can break wickets into pieces";
+
+  const a = document.createElement("a");
+  a.href = fileName;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  a.className = "player-link";
+  a.innerHTML = `
+    <div class="player-card">
+      <img src="${imageFile}" alt="${name}">
+      <div class="player-name">${name}</div>
+      <textarea readonly rows="5" cols="20">${description}</textarea>
+    </div>
+  `;
+  grid.appendChild(a);
+});
+ const searchInput = document.getElementById("playerSearch");
+  searchInput.addEventListener("input", () => {
+    const value = searchInput.value.toLowerCase();
+    const cards = document.querySelectorAll(".player-link");
+    cards.forEach(card => {
+      const name = card.querySelector(".player-name").textContent.toLowerCase();
+      card.style.display = name.includes(value) ? "block" : "none";
+    });
+  });
+</script>
+<section class="report-section">
+ <h1 class="Repoart Players">Report Incorrect Player Info With Proof</h1>
+  <form class="report-form">
+    <div class="form-wrapper">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea placeholder="Describe the issue or correction With proof like excle files or screenshoot or crickheros files." required></textarea>
+      <input type="file" class="file-upload" />
+      <button type="submit">Send Report</button>
+    </div>
+  </form>
+</section>
+
+<style>
+.form-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.report-section h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 4rem; /* Increase this value */
+  background: linear-gradient(to right, #00c6ff, #0072ff, #00ffcc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+
+.report-section {
+  position: relative;
+  max-width: 1500px;
+  height: 650px;
+  margin: 3rem auto;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.report-section::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: url('PPL Images/1152.jpg') no-repeat center center / cover;
+  filter: brightness(0.6);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.report-section h1 {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 3rem;
+  color-#00ffcc;	
+}
+
+.report-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.report-form input,
+.report-form textarea {
+  padding: 0.9rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  resize: vertical;
+  background-color: #fff;
+}
+
+.report-form textarea {
+  background-color: #fff;
+  color: #000;
+  min-height: 120px;
+  max-width: 450px;
+}
+
+.report-form input.file-upload {
+  background-color: #fff;
+  color: #333;
+  padding: 0.8rem;
+  border: none;
+  cursor: pointer;
+}
+
+.report-form button {
+  padding: 0.9rem;
+  font-size: 1rem;
+  background-color: #00d1b2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.report-form button:hover {
+  background-color: #00b89c;
+}
+</style>
+<script
+  src='https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1'>
+</script>
+</body>
+</html>
+

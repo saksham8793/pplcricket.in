@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PPL Tournaments</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      overflow-x: hidden;
+    }
+
+    #tournament {
+      background-image: url('PPL Images/Screenshot 2025-04-15 001755.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 80px 20px;
+      background-attachment: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .tournament-header {
+      font-size: 2.5rem;
+      color: orange;
+      margin-bottom: 40px;
+    }
+
+    .tournament-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .tournament-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tournament-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    .tournament-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .tournament-card h3 {
+      margin: 10px 0 5px;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .tournament-card p {
+      margin-bottom: 10px;
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    /* Responsive styles for small screens */
+    @media screen and (max-width: 600px) {
+      .tournament-header {
+        font-size: 1.8rem;
+      }
+
+      #tournament {
+        padding: 50px 10px;
+        background-attachment: scroll;
+      }
+
+      .tournament-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOURNAMENT SECTION -->
+  <section id="tournament">
+    <div class="tournament-content">
+      <h1 class="tournament-header">Tournaments</h1>
+      <div class="tournament-grid">
+        <a href="https://cricheroes.com/tournament/535813/ppl3/matches/past-matches" class="tournament-card"" target="_blank">
+        <img src="PPL Images/Screenshot 2025-04-09 105956.png" alt="PPL 3">
+        <h3>PPL 3</h3>
+        <p>10-Dec-22 to 11-Dec-22</p>
+      </a>
+      <a href="https://cricheroes.com/tournament/587062/ppl-4/matches/past-matches" class="tournament-card"" target="_blank">
+        <img src="PPL Images/Screenshot 2025-04-09 110008.png" alt="PPL 4">
+        <h3>PPL 4</h3>
+        <p>04-Feb-23 to 05-Feb-23</p>
+      </a>
+      <a href="https://cricheroes.com/tournament/658353/ppl-5/matches/past-matches" class="tournament-card"" target="_blank">
+        <img src="PPL Images/Screenshot 2025-04-09 110020.png" alt="PPL 5">
+        <h3>PPL 5</h3>
+        <p>22-Apr-23 to 23-Apr-23</p>
+      </a>
+      <a href="https://cricheroes.com/tournament/721855/ppl-6/matches/past-matches" class="tournament-card"" target="_blank">
+        <img src="PPL Images/Screenshot 2025-04-09 110033.png" alt="PPL 6">
+        <h3>PPL 6</h3>
+        <p>08-Jul-23 to 09-Jul-23</p>
+      </a>
+      <a href="https://cricheroes.com/tournament/754134/professional-premier-league-7/matches/past-matches" class="tournament-card"" target="_blank">
+        <img src="PPL Images/Screenshot 2025-04-09 110040.png" alt="PPL 7">
+        <h3>PPL 7</h3>
+        <p>02-Sep-23 to 16-Sep-23</p>
+      </a>
+      <a href="https://cricheroes.com/tournament/822756/ppl-8/matches/past-matches" class="tournament-card"" target="_blank">
+        <img src="PPL Images/Screenshot 2025-04-09 110055.png" alt="PPL 8">
+        <h3>PPL 8</h3>
+        <p>09-Dec-23 to 16-Dec-23</p>
+      </a>
+      <a href="https://cricheroes.com/tournament/936662/ppl-9/matches/past-matches" class="tournament-card"" target="_blank">
+        <img src="PPL Images/Screenshot 2025-04-09 110102.png" alt="PPL 9">
+        <h3>PPL 9</h3>
+        <p>09-Mar-24 to 10-Mar-24</p>
+      </a>
+      <a href="https://cricheroes.com/tournament/1053041/ppl10/matches/past-matches" class="tournament-card"" target="_blank">
+        <img src="PPL Images/Screenshot 2025-04-09 110108.png" alt="PPL 10">
+        <h3>PPL 10</h3>
+        <p>15-Jun-24 to 30-Jun-24</p>
+      </a>
+      <a href="https://cricheroes.com/tournament/1117521/ppl-11/matches/past-matches" class="tournament-card"" target="_blank">
+        <img src="PPL Images/Screenshot 2025-04-09 110114.png" alt="PPL 11">
+        <h3>PPL 11</h3>
+        <p>21-Sep-24 to 22-Sep-24</p>
+      </a>
+      <a href="https://cricheroes.com/tournament/1221265/ppl12-professional-premier-league-/matches/past-matches" class="tournament-card"" target="_blank">
+        <img src="PPL Images/Screenshot 2025-04-09 110125.png" alt="PPL 12">
+        <h3>PPL 12</h3>
+        <p>14-Dec-24 to 15-Dec-24</p>
+      </a>
+      <a href="https://cricheroes.com/tournament/1349507/professional-premier-league-13/matches/past-matches" class="tournament-card"" target="_blank">
+        <img src="PPL Images/Screenshot 2025-04-09 110131.png" alt="PPL 13">
+        <h3>PPL 13</h3>
+        <p>22-Feb-25 to 23-Feb-25</p>
+      </a>
+      <a href="#" class="tournament-card">
+        <img src="PPL Images/Screenshot 2025-04-09 130448.png" alt="PPL 14"" target="_blank">
+        <h3>PPL 14</h3>
+        <p>UPCOMING</p>
+      </a>
+      </div>
+    </div>
+  </section>
+<script
+  src='https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1'>
+</script>
+</body>
+</html>

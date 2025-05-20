@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🏏 Cricket News</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Background with Animated Gradient */
+    body {
+      position: relative;
+      overflow-y: auto;
+      background: linear-gradient(45deg, #ff5c8d, #6a1b9a, #3f51b5, #00bcd4);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 40px;
+      margin-bottom: 40px;
+      color: #00ffe5;
+      text-shadow: 0 0 10px #00ffe5, 0 0 20px #00ffe5;
+      animation: pulse 2s infinite alternate, fadeIn 1.5s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes pulse {
+      0% { text-shadow: 0 0 10px #00ffe5; }
+      100% { text-shadow: 0 0 20px #00ffe5, 0 0 30px #00ffe5; }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 25px;
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+      transition: 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card h3 {
+      color: #00ffff;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #e0e0e0;
+    }
+
+    .highlight {
+      border-left: 6px solid #ffc107;
+    }
+
+    .highlight h3 {
+      color: #ffd700;
+    }
+
+    .stats {
+      font-family: monospace;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px dashed #aaa;
+      padding: 12px;
+      margin-top: 12px;
+      color: #00ffcc;
+    }
+
+    a.news-title {
+      text-decoration: none;
+      color: #00ffff;
+    }
+
+    a.news-title:hover {
+      text-decoration: underline;
+      color: #00ccff;
+    }
+
+    .player-profile {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+    }
+
+    .player-profile img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+
+    .player-info {
+      color: #e0e0e0;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 28px; }
+      .card h2 { font-size: 18px; }
+      .stats { font-size: 13px; }
+    }
+
+    /* Custom Scrollbar Styles */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, #ff5c8d, #6a1b9a, #3f51b5, #00bcd4);
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(45deg, #ff8f00, #f44336, #9c27b0);
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🏏 Cricket News</h1>	
+     
+    <!-- Mahakaal Mavericks News Card -->
+    <div class="card">
+      <h3>🏆 Mahakaal Mavericks Wons PPL Season 13 Finals!</h3>
+      <p><strong>Summary:</strong> Mahakaal Mavericks defeated Shivas Striker by 5  in an electrifying finals of First Season of PPL Cricket Turf🏆🏆🏆🏆🏆🏆🏆.</p>
+      <p><strong>Player of the Match:</strong> Amit Kumar</p>
+      <div class="stats">
+        Batting: 44 R | 18 B | 4x4 | 6x6 | SR: 244.44  
+        <br>Bowling: 1.0 Ov | 0 M | 2 R | 1 W | Economy: 2.00
+      </div>
+
+      <!-- Best Batter Details -->
+      <div class="player-profile">
+        <img src="PPL Images/Screenshot 2025-05-06 123934.png" alt="Amit Kumar"> <!-- Replace with Amit's profile photo -->
+        <div class="player-info">
+          <strong>Best Batter:</strong> Amit Kumar <br>
+          Mahakaal Mavericks <br>
+          <span>Batting: 44 R | 18 B | 4x4 | 6x6 | SR: 244.44</span>
+        </div>
+      </div>
+
+      <!-- Best Bowler Details -->
+      <div class="player-profile">
+        <img src="PPL Images/2.png" alt="Jayraj Kharat"> <!-- Replace with Jayraj's profile photo -->
+        <div class="player-info">
+          <strong>Best Bowler:</strong> Jayraj Kharat <br>
+          Mahakaal Mavericks <br>
+          <span>Bowling: 1.0 Ov | 0 M | 2 R | 1 W | ECO: 2.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RudrGanesh News Card -->
+    <div class="card">
+      <h3>🏆 RudrGanesh wons PPL Season 12 Finals!</h3>
+      <p><strong>Summary:</strong> RudrGanesh defeated TEAM Chatrapati Shivaji Maharaj by 7 wickets in an exciting finals.</p>
+      <p><strong>Player of the Match:</strong> Vivek Awasthi</p>
+      <div class="stats">
+        Bowling: 2.0 Ov | 0 M | 9 R | 4 W | Economy: 4.50
+      </div>
+
+      <!-- Best Batter Details -->
+      <div class="player-profile">
+        <img src="PPL Images/Screenshot 2025-04-18 130525.png" alt="Arjun"> <!-- Replace with Arjun's profile photo -->
+        <div class="player-info">
+          <strong>Best Batter:</strong> Arjun <br>
+          RudrGanesh <br>
+          <span>Batting: 18 R | 10 B | 1x4 | 2x6 | SR: 180.00</span>
+        </div>
+      </div>
+
+      <!-- Best Bowler Details -->
+      <div class="player-profile">
+        <img src="PPL Images/Screenshot 2025-04-18 173813.png" alt="Vivek Awasthi"> <!-- Replace with Vivek's profile photo -->
+        <div class="player-info">
+          <strong>Best Bowler:</strong> Vivek Awasthi <br>
+          RudrGanesh <br>
+          <span>Bowling: 2.0 Ov | 0 M | 9 R | 4 W | ECO: 4.50</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kalki News Card (New) -->
+    <div class="card">
+      <h3>🏆 Kalki Wons PPL Season 11 Finals!</h3>
+      <p><strong>Summary:</strong> Kalki defeated Vishwaroop by 2 runs in a fantastic finals.</p>
+      <p><strong>Player of the Match:</strong> Akshay Modha</p>
+      <div class="stats">
+        Batting: 16 R | 11 B | 0x4 | 2x6 | SR: 145.45  
+        <br>Bowling: 1.0 Ov | 0 M | 11 R | 1 W | Economy: 11.00
+      </div>
+
+      <!-- Best Batter Details -->
+      <div class="player-profile">
+        <img src="PPL Images/player.png" alt="Naveen"> <!-- Replace with Naveen's profile photo -->
+        <div class="player-info">
+          <strong>Best Batter:</strong> Naveen <br>
+          Vishwaroop <br>
+          <span>Batting: 17 R | 14 B | 2x4 | 1x6 | SR: 121.43</span>
+        </div>
+      </div>
+
+      <!-- Best Bowler Details -->
+      <div class="player-profile">
+        <img src="PPL Images/Screenshot 2025-04-18 131821.png" alt="Ashish Chawhan"> <!-- Replace with Ashish's profile photo -->
+        <div class="player-info">
+          <strong>Best Bowler:</strong> Ashish Chawhan <br>
+          Vishwaroop <br>
+          <span>Bowling: 1.0 Ov | 0 M | 3 R | 1 W | ECO: 3.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PINAK News Card -->
+<div class="card">
+  <h3>🏆 PINAK Wons PPL Season 10 Finals!</h3>
+  <p><strong>Summary:</strong> PINAK defeated Meghnaad by 5 wickets in a suspenseful finals.</p>
+  <p><strong>Player of the Match:</strong> Amit Kumar</p>
+  <div class="stats">
+    Batting: 21 R | 12 B | 2x4 | 2x6 | SR: 175.00  
+    <br>Bowling: 1.0 Ov | 0 M | 5 R | 0 W | Economy: 5.00
+  </div>
+
+  <!-- Best Batter Details -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-05-06 123934.png" alt="Amit Kumar">
+    <div class="player-info">
+      <strong>Best Batter:</strong> Amit Kumar <br>
+      PINAK <br>
+      <span>Batting: 21 R | 12 B | 2x4 | 2x6 | SR: 175.00</span>
+    </div>
+  </div>
+
+  <!-- Best Bowler Details -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-18 152954.png" alt="Krishna Kumar">
+    <div class="player-info">
+      <strong>Best Bowler:</strong> Krishna Kumar <br>
+      PINAK <br>
+      <span>Bowling: 2.0 Ov | 1 M | 3 R | 1 W | ECO: 1.50</span>
+    </div>
+  </div>
+</div>
+
+  <!-- Narayani Sena News Card -->
+<div class="card">
+  <h3>🏆 Narayani Sena Wons PPL Season 9 Finals!</h3>
+  <p><strong>Summary:</strong> Narayani Sena defeated Jai Shree Ram by 5 wickets in an intense finals.</p>
+  <p><strong>Player of the Match:</strong> Avinash</p>
+  <div class="stats">
+    Batting: 30 R | 16 B | 2x4 | 3x6 | SR: 187.50  
+    <br>Bowling: 1.0 Ov | 0 M | 7 R | 0 W | ECO: 7.00
+  </div>
+
+  <!-- Best Batter -->
+  <div class="player-profile">
+    <img src="PPL Images/player.png" alt="Avinash">
+    <div class="player-info">
+      <strong>Best Batter:</strong> Avinash <br>
+      Narayani Sena <br>
+      <span>Batting: 30 R | 16 B | 2x4 | 3x6 | SR: 187.50</span>
+    </div>
+  </div>
+
+  <!-- Best Bowler -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-18 170325.png" alt="Nishal Gupta">
+    <div class="player-info">
+      <strong>Best Bowler:</strong> Nishal Gupta <br>
+      Jai Shree Ram <br>
+      <span>Bowling: 0.4 Ov | 0 M | 12 R | 1 W | ECO: 18.00</span>
+    </div>
+  </div>
+</div>
+
+  <!-- PINAK PPL Season 8 News Card -->
+<div class="card">
+  <h3>🏆 PINAK Wons PPL Season 8 Finals!</h3>
+  <p><strong>Summary:</strong> PINAK defeated TEJAS by 20 runs in a brilliant finals.</p>
+  <p><strong>Player of the Match:</strong> Prathamesh Gindodia</p>
+  <div class="stats">
+    Batting: 27 R | 15 B | 4x4 | 0x6 | SR: 180.00  
+    <br>Bowling: 2.0 Ov | 0 M | 12 R | 2 W | ECO: 6.00
+  </div>
+
+  <!-- Best Batter -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-18 172318.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Batter:</strong> Prathamesh Gindodia <br>
+      PINAK <br>
+      <span>Batting: 27 R | 15 B | 4x4 | 0x6 | SR: 180.00</span>
+    </div>
+  </div>
+
+  <!-- Best Bowler -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-18 172318.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Bowler:</strong> Prathamesh Gindodia <br>
+      PINAK <br>
+      <span>Bowling: 2.0 Ov | 0 M | 12 R | 2 W | ECO: 6.00</span>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h3>🏆 Wave Riders Wons PPL Season 7 Finals!</h3>
+  <p><strong>Summary:</strong> Wave Riders defeated Vyomanauts by 3 wickets in a mind blowing finals.</p>
+  <p><strong>Player of the Match:</strong> Akshay Modha</p>
+  <div class="stats">
+     Batting: 45 R | 16 B | 2x4 | 6x6 | SR: 281.25 
+    <br>Bowling: 0.5 Ov | 0 M | 3 R | 1 W | ECO: 3.60
+  </div>
+
+  <!-- Best Batter -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-15 135201.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Batter:</strong> Akshay Modha <br>
+      PINAK <br>
+      <span>Batting: 45 R | 16 B | 2x4 | 6x6 | SR: 281.25 </span>
+    </div>
+  </div>
+
+  <!-- Best Bowler -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-18 134517.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Bowler:</strong> Deepak <br>
+      PINAK <br>
+      <span>Bowling: 2.0 Ov | 0 M | 15 R | 3 W | ECO: 7.50</span>
+    </div>
+  </div>
+</div>
+
+ <div class="card">
+  <h3>🏆 Tejas Wons PPL Season 6 Finals!</h3>
+  <p><strong>Summary:</strong> Tejas defeated Vyomanauts by 8 runs in a superb finals.</p>
+  <p><strong>Player of the Match:</strong> OG</p>
+  <div class="stats"> 
+    Bowling: 1.0 Ov | 0 M | 10 R | 1 W | ECO: 10.00
+  </div>
+
+  <!-- Best Batter -->
+  <div class="player-profile">
+    <img src="PPL Images/joshi.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Batter:</strong> Abhishek Joshi <br>
+      PINAK <br>
+      <span>Batting: 23 R | 23 B | 1x4 | 3x6 | SR: 100.00 </span>
+    </div>
+  </div>
+
+  <!-- Best Bowler -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-18 134517.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Bowler:</strong> Deepak <br>
+      PINAK <br>
+      <span>Bowling: 2.0 Ov | 0 M | 8 R | 2 W | ECO: 4.00</span>
+    </div>
+  </div>
+</div>
+
+  
+  <div class="card">
+  <h3>🏆 Tejas Wons PPL Season 5 Finals!</h3>
+  <p><strong>Summary:</strong> Tejas defeated Wave Riders by 6 wickets in a thrilling finals.</p>
+  <p><strong>Player of the Match:</strong> Vishal K</p>
+  <div class="stats"> 
+    Batting: 22 R | 9 B | 2x4 | 2x6 | SR: 244.44 
+    <br>Bowling: 1.0 Ov | 0 M | 7 R | 2 W | ECO: 7.00
+  </div>
+
+  <!-- Best Batter -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-18 171225.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Batter:</strong> Vishal K <br>
+      PINAK <br>
+      <span> Batting: 22 R | 9 B | 2x4 | 2x6 | SR: 244.44 </span>
+    </div>
+  </div>
+
+  <!-- Best Bowler -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-18 171225.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Bowler:</strong> Vishal K <br>
+      PINAK <br>
+      <span>Bowling: 1.0 Ov | 0 M | 7 R | 2 W | ECO: 7.00</span>
+    </div>
+  </div>
+</div>
+
+  <div class="card">
+  <h3>🏆 Vyomanauts Wons PPL Season 4 Finals!</h3>
+  <p><strong>Summary:</strong> Vyomanauts defeated Wave Riders by 17 runs in a epic finals.</p>
+  <p><strong>Player of the Match:</strong> Vivek Awasthi</p>
+  <div class="stats"> 
+    Batting: 22 R | 11 B | 1x4 | 2x6 | SR: 200.00 
+    <br>Bowling: 2.0 Ov | 0 M | 12 R | 0 W | ECO: 6.00
+  </div>
+
+  <!-- Best Batter -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-18 172318.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Batter:</strong>Prashant Pandey <br>
+      PINAK <br>
+      <span> Batting: 23 R | 15 B | 1x4 | 3x6 | SR: 153.33 </span>
+    </div>
+  </div>
+
+  <!-- Best Bowler -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-18 170325.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Bowler:</strong> Nishal Gupta <br>
+      PINAK <br>
+      <span>Bowling: 1.0 Ov | 0 M | 1 R | 2 W | ECO: 1.00</span>
+    </div>
+  </div>
+</div>
+
+   <div class="card">
+  <h3>🏆 The Unstoppable Wons PPL Season 3 Finals!</h3>
+  <p><strong>Summary:</strong> The Unstoppable defeated Brothers Of Destruction by 1 wicket in a heart-stopping finals.</p>
+  <p><strong>Player of the Match:</strong> Himanshu Chopra</p>
+  <div class="stats"> 
+    Batting: 11 R | 7 B | 0x4 | 1x6 | SR: 157.14 
+    <br>Bowling: 2.0 Ov | 1 M | 3 R | 1 W | ECO: 1.50
+  </div>
+
+  <!-- Best Batter -->
+  <div class="player-profile">
+    <img src="PPL Images/player.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Batter:</strong>Prashant Pandey <br>
+      PINAK <br>
+      <span> Batting: 26 R | 17 B | 2x4 | 2x6 | SR: 152.94 </span>
+    </div>
+  </div>
+
+  <!-- Best Bowler -->
+  <div class="player-profile">
+    <img src="PPL Images/Screenshot 2025-04-18 151414.png" alt="Prathamesh Gindodia">
+    <div class="player-info">
+      <strong>Best Bowler:</strong> Himanshu Chopra <br>
+      PINAK <br>
+      <span>Bowling: 2.0 Ov | 1 M | 3 R | 1 W | ECO: 1.50</span>
+    </div>
+  </div>
+</div>
+
+    <!-- Live News (For Mahakaal Mavericks) -->
+    <div id="news-container">
+      <p>Loading live cricket news...</p>
+    </div>
+  </div>
+
+  <script>
+    const apiKey = 'your_api_key_here'; // Replace with your NewsAPI key
+    const apiUrl = `https://newsapi.org/v2/everything?q=cricket&language=en&sortBy=publishedAt&apiKey=${apiKey}`;
+
+    async function fetchNews() {
+      const newsContainer = document.getElementById('news-container');
+
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.articles && data.articles.length > 0) {
+          newsContainer.innerHTML = '';
+          data.articles.slice(0, 5).forEach((article, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.animationDelay = `${index * 0.3}s`;
+            card.innerHTML = `
+              <h2><a href="${article.url}" target="_blank" class="news-title">${article.title}</a></h2>
+              <p>${article.description || ''}</p>
+            `;
+            newsContainer.appendChild(card);
+          });
+        } else {
+          newsContainer.innerHTML = '<p>No cricket news found.</p>';
+        }
+      } catch (error) {
+        newsContainer.innerHTML = '<p>Failed to load cricket news.</p>';
+        console.error(error);
+      }
+    }
+
+    fetchNews();
+  </script>
+<script
+  src='https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1'>
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
