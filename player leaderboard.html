@@ -66,8 +66,7 @@
     .dropdown {
       position: relative;
     }
-
-    .dropbtn {
+       .dropbtn {
       padding: 12px 20px;
       background: #00ffcc;
       color: white;
@@ -78,7 +77,6 @@
     }
 
     .dropdown-content {
-      display: none;
       position: absolute;
       background-color: white;
       color: black;
@@ -87,7 +85,13 @@
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
       z-index: 10;
     }
+     .dropdown-content {
+  display: none;
+}
 
+.dropdown-content.show {
+  display: block;
+}
     .dropdown-content button {
       padding: 10px 16px;
       border: none;
@@ -100,11 +104,6 @@
     .dropdown-content button:hover {
       background: #f1f1f1;
     }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
     .contacts {
       display: flex;
       flex-direction: column;
@@ -2203,19 +2202,32 @@
   </section>
 <script>
  function searchPlayers() {
-    const input = document.getElementById("searchBar").value.toLowerCase();
-    const cards = document.getElementsByClassName("player-card");
+  const input = document.getElementById("searchBar").value.toLowerCase();
+  const cards = document.getElementsByClassName("player-card");
 
-    for (let i = 0; i < cards.length; i++) {
-      const name = cards[i].querySelector("h3").textContent.toLowerCase();
-      if (name.includes(input)) {
-        cards[i].style.display = "flex";
-      } else {
-        cards[i].style.display = "none";
-      }
-    }
+  for (let i = 0; i < cards.length; i++) {
+    const name = cards[i].querySelector("h3").textContent.toLowerCase();
+    cards[i].style.display = name.includes(input) ? "flex" : "none";
   }
-    function sortPlayers(statName) {
+}
+
+const dropbtn = document.querySelector('.dropbtn');
+const dropdownContent = document.querySelector('.dropdown-content');
+
+dropbtn.addEventListener('click', () => {
+  dropdownContent.classList.toggle('show');
+});
+
+const sortButtons = dropdownContent.querySelectorAll('button');
+sortButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const statName = button.textContent;
+    sortPlayers(statName);
+    dropdownContent.classList.remove('show');
+  });
+});
+
+function sortPlayers(statName) {
   const container = document.querySelector('.contacts-container');
   const cards = Array.from(document.querySelectorAll('.player-card'));
 
@@ -2232,9 +2244,15 @@
 
   cards.sort((a, b) => getStatValue(b) - getStatValue(a));
 
-  // Remove and re-add cards in new order
   cards.forEach(card => container.appendChild(card));
 }
+
+// Optional: Close dropdown if clicked outside
+window.addEventListener('click', (e) => {
+  if (!e.target.matches('.dropbtn')) {
+    dropdownContent.classList.remove('show');
+  }
+});
   </script>
 <section class="report-section">
  <h1 class="Repoart Players">Report Incorrect Player Info With Proof</h1>
