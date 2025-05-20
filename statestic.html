@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🏏 Cricket News</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto&display=swap" rel="stylesheet">
   <style>
@@ -18,7 +19,6 @@
       overflow-x: hidden;
     }
 
-    /* Background with Animated Gradient */
     body {
       position: relative;
       overflow-y: auto;
@@ -34,19 +34,17 @@
     }
 
     .container {
-      position: relative;
-      z-index: 1;
       max-width: 1000px;
       margin: auto;
       padding: 40px 20px;
-      text-align: center;
     }
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 40px;
+      font-size: 2.5rem;
       margin-bottom: 40px;
       color: #00ffe5;
+      text-align: center;
       text-shadow: 0 0 10px #00ffe5, 0 0 20px #00ffe5;
       animation: pulse 2s infinite alternate, fadeIn 1.5s ease-out forwards;
       opacity: 0;
@@ -76,7 +74,7 @@
     }
 
     .card:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
       box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
     }
 
@@ -89,20 +87,13 @@
 
     .card h3 {
       color: #00ffff;
-      font-weight: bold;
+      font-size: 1.4rem;
       margin-bottom: 10px;
     }
 
     .card p {
       color: #e0e0e0;
-    }
-
-    .highlight {
-      border-left: 6px solid #ffc107;
-    }
-
-    .highlight h3 {
-      color: #ffd700;
+      font-size: 1rem;
     }
 
     .stats {
@@ -112,75 +103,29 @@
       padding: 12px;
       margin-top: 12px;
       color: #00ffcc;
-    }
-
-    a.news-title {
-      text-decoration: none;
-      color: #00ffff;
-    }
-
-    a.news-title:hover {
-      text-decoration: underline;
-      color: #00ccff;
+      font-size: 0.9rem;
     }
 
     .player-profile {
       display: flex;
       align-items: center;
       margin-top: 15px;
+      flex-wrap: wrap;
     }
 
     .player-profile img {
       width: 50px;
       height: 50px;
+      object-fit: cover;
       border-radius: 50%;
       margin-right: 15px;
     }
 
     .player-info {
       color: #e0e0e0;
+      font-size: 0.95rem;
     }
 
-    @media (max-width: 600px) {
-      h1 { font-size: 28px; }
-      .card h2 { font-size: 18px; }
-      .stats { font-size: 13px; }
-    }
-
-    /* Custom Scrollbar Styles */
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(45deg, #ff5c8d, #6a1b9a, #3f51b5, #00bcd4);
-      border-radius: 10px;
-      transition: background 0.3s;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(45deg, #ff8f00, #f44336, #9c27b0);
-    }
-    /* Responsive */
-    @media screen and (max-width: 600px) {
-      .tournament-header {
-        font-size: 1.8rem;
-      }
-      #tournament {
-        padding: 50px 10px;
-        background-attachment: scroll;
-      }
-      .tournament-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* 3-dot menu icon fixed top right */
     .menu-icon {
       position: fixed;
       top: 20px;
@@ -194,10 +139,8 @@
       padding: 8px 12px;
       border-radius: 4px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      line-height: 1;
     }
 
-    /* Overlay menu panel */
     .menu-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -218,41 +161,108 @@
       transform: translateX(0);
     }
 
-    /* Buttons inside menu */
     .menu-overlay a {
       background-color: orange;
       color: white;
       text-decoration: none;
       padding: 14px 30px;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       border-radius: 30px;
       box-shadow: 0 4px 10px rgba(255, 165, 0, 0.6);
-      transition: background-color 0.3s ease;
-      width: 250px;
+      transition: 0.3s ease;
+      width: 220px;
       text-align: center;
-      font-weight: bold;
-      user-select: none;
     }
+
     .menu-overlay a:hover {
       background-color: #ff9900;
       box-shadow: 0 6px 15px rgba(255, 165, 0, 0.8);
     }
 
-    /* When menu is open, blur the tournament content */
-    body.menu-open #tournament {
-      filter: blur(5px) brightness(0.7);
-      pointer-events: none;
-      user-select: none;
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, #ff5c8d, #6a1b9a, #3f51b5, #00bcd4);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(45deg, #ff8f00, #f44336, #9c27b0);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .card h3 {
+        font-size: 1.2rem;
+      }
+
+      .stats {
+        font-size: 0.85rem;
+      }
+
+      .menu-overlay a {
+        font-size: 1rem;
+        width: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px 12px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .player-profile {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .player-profile img {
+        margin-bottom: 10px;
+        margin-right: 0;
+      }
+
+      .menu-icon {
+        font-size: 24px;
+        padding: 6px 10px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .stats {
+        font-size: 0.8rem;
+      }
+
+      .card h3 {
+        font-size: 1.1rem;
+      }
+
+      .menu-overlay a {
+        font-size: 1rem;
+        width: 180px;
+      }
     }
   </style>
 </head>
 <body>
- <!-- 3-dot Menu Icon -->
   <div class="menu-icon" id="menuIcon" aria-label="Toggle menu" role="button" tabindex="0">☰</div>
 
-  <!-- Overlay menu with links -->
   <nav class="menu-overlay" id="menuOverlay" aria-hidden="true">
-   <a href="index.html#home">Home</a>
+    <a href="index.html#home">Home</a>
     <a href="DOCTYPE html.html" target="_blank">Tournament</a>
     <a href="Player Statestics.html" target="_blank">Player Info</a>
     <a href="player leaderboard.html" target="_blank">Leaderboard</a>
@@ -260,6 +270,7 @@
     <a href="index.html#contact">Contact Us</a>
     <a href="#">Latest News</a>
   </nav>
+
   <div class="container">
     <h1>🏏 Cricket News</h1>	
      
@@ -598,76 +609,17 @@
   </div>
 </div>
 
-    <!-- Live News (For Mahakaal Mavericks) -->
-    <div id="news-container">
-      <p>Loading live cricket news...</p>
-    </div>
-  </div>
-
   <script>
-    const apiKey = 'your_api_key_here'; // Replace with your NewsAPI key
-    const apiUrl = `https://newsapi.org/v2/everything?q=cricket&language=en&sortBy=publishedAt&apiKey=${apiKey}`;
-
-    async function fetchNews() {
-      const newsContainer = document.getElementById('news-container');
-
-      try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        if (data.articles && data.articles.length > 0) {
-          newsContainer.innerHTML = '';
-          data.articles.slice(0, 5).forEach((article, index) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.style.animationDelay = `${index * 0.3}s`;
-            card.innerHTML = `
-              <h2><a href="${article.url}" target="_blank" class="news-title">${article.title}</a></h2>
-              <p>${article.description || ''}</p>
-            `;
-            newsContainer.appendChild(card);
-          });
-        } else {
-          newsContainer.innerHTML = '<p>No cricket news found.</p>';
-        }
-      } catch (error) {
-        newsContainer.innerHTML = '<p>Failed to load cricket news.</p>';
-        console.error(error);
-      }
-    }
-
-    fetchNews();
-  </script>
-<script
-  src='https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1'>
-</script>
- <script>
     const menuIcon = document.getElementById('menuIcon');
     const menuOverlay = document.getElementById('menuOverlay');
 
-    // Toggle menu visibility
-    function toggleMenu() {
-      const isOpen = menuOverlay.classList.toggle('open');
-      document.body.classList.toggle('menu-open', isOpen);
-      menuOverlay.setAttribute('aria-hidden', !isOpen);
-    }
-
-    menuIcon.addEventListener('click', toggleMenu);
-
-    // Also close menu if any link inside is clicked
-    menuOverlay.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        menuOverlay.classList.remove('open');
-        document.body.classList.remove('menu-open');
-        menuOverlay.setAttribute('aria-hidden', 'true');
-      });
+    menuIcon.addEventListener('click', () => {
+      menuOverlay.classList.toggle('open');
     });
 
-    // Allow keyboard access for menu icon
-    menuIcon.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleMenu();
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "Escape") {
+        menuOverlay.classList.remove('open');
       }
     });
   </script>
