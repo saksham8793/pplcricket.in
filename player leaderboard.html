@@ -2204,36 +2204,6 @@ window.addEventListener('click', (e) => {
   }
 });
   </script>
-<script>
-    const menuIcon = document.getElementById('menuIcon');
-    const menuOverlay = document.getElementById('menuOverlay');
-
-    // Toggle menu visibility
-    function toggleMenu() {
-      const isOpen = menuOverlay.classList.toggle('open');
-      document.body.classList.toggle('menu-open', isOpen);
-      menuOverlay.setAttribute('aria-hidden', !isOpen);
-    }
-
-    menuIcon.addEventListener('click', toggleMenu);
-
-    // Also close menu if any link inside is clicked
-    menuOverlay.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        menuOverlay.classList.remove('open');
-        document.body.classList.remove('menu-open');
-        menuOverlay.setAttribute('aria-hidden', 'true');
-      });
-    });
-
-    // Allow keyboard access for menu icon
-    menuIcon.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleMenu();
-      }
-    });
-  </script>
 <script
   src='https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1'>
 </script>
