@@ -204,57 +204,7 @@
       100% {
         text-shadow: 0 0 15px #ff00ff;
       }
-    }
-
-    .report-section {
-      padding: 60px 20px;
-      background: #222;
-      color: #fff;
-      text-align: center;
-    }
-
-    .report-section h1 {
-      font-size: 2.5rem;
-      color: #00ffcc;
-      margin-bottom: 20px;
-      animation: twinkleGlow 1.5s infinite alternate;
-    }
-
-    .report-form {
-      max-width: 600px;
-      margin: auto;
-    }
-
-    .form-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .form-wrapper input,
-    .form-wrapper textarea,
-    .form-wrapper button {
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: none;
-    }
-
-    .form-wrapper textarea {
-      min-height: 120px;
-    }
-
-    .form-wrapper button {
-      background: #00ffcc;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .form-wrapper button:hover {
-      background: #00ccaa;
-    }
-
+    }  
     @media (max-width: 768px) {
       .player-card {
         flex-direction: column;
@@ -2254,18 +2204,6 @@ window.addEventListener('click', (e) => {
   }
 });
   </script>
-<section class="report-section">
- <h1 class="Repoart Players">Report Incorrect Player Info With Proof</h1>
-  <form class="report-form">
-    <div class="form-wrapper">
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Describe the issue or correction With proof like excle files or screenshoot or crickheros files." required></textarea>
-      <input type="file" class="file-upload" />
-      <button type="submit">Send Report</button>
-    </div>
-  </form>
-</section>
 <script>
     const menuIcon = document.getElementById('menuIcon');
     const menuOverlay = document.getElementById('menuOverlay');
