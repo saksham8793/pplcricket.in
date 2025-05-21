@@ -212,12 +212,39 @@
       background: yellow;
       color: black;
     }
+    .download-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background-color: #218838;
+    }
+    .center-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
   </style>
 </head>
 <body>
   <header>
   <h1>Premier League Central</h1>
-
+  <div class="center-box">
+    <h1>Download Our Android App</h1>
+    <a href="https://pplcricket.in/PPL+Cricket-0_2_debug.apk" download class="download-btn">
+      Download APK
+    </a>
+  </div>
   <!-- Hamburger only on mobile -->
   <div class="hamburger" onclick="toggleMenu()">☰</div>
 
