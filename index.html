@@ -275,8 +275,49 @@ function toggleMenu() {
     background-color: #1a1a1a; /* optional background to match design */
   }
   }
- 
-  </style>
+.carousel {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+  min-width: 100%;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: auto;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.carousel-dots .dot {
+  width: 14px;
+  height: 14px;
+  background-color: #aaa;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.carousel-dots .dot.active {
+  background-color: #ff4500;
+  box-shadow: 0 0 6px #ff4500;
+}
+</style>
 <style>
 @keyframes burnGlow {
   0%, 100% {
@@ -350,8 +391,14 @@ function toggleMenu() {
   </div>
 </div>
 
-<div class="carousel-dots"></div>
-  
+<div class="carousel-dots">
+  <span class="dot active"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
   <section class="hall-of-flames">
    <h1 style="font-size: 4rem; text-align: center; font-weight: bold; margin: 30px 0;" class="burning-text">
   Hall of Flames🔥
@@ -472,6 +519,24 @@ function toggleMenu() {
     mobileNav.classList.toggle('nav-open');
   }
 </script>
+<script>
+  const track = document.querySelector('.carousel-track');
+  const dots = document.querySelectorAll('.carousel-dots .dot');
 
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      // Move carousel
+      const slideWidth = document.querySelector('.carousel-slide').offsetWidth;
+      track.style.transform = `translateX(-${slideWidth * index}px)`;
+
+      // Update dots
+      dots.forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+    });
+  });
+</script>
+<script
+  src='https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1'>
+</script>
 </body>
 </html>
