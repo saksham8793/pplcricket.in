@@ -32,294 +32,285 @@
       font-size: 2rem;
       color: #a020f0;
     }
+ /* Hide hamburger and mobile nav on big screens */
+.hamburger, #mobileNav {
+  display: none;
+}
 
-    .hamburger, #mobileNav {
-      display: none;
-    }
+/* Show desktop nav on big screens */
+.nav-desktop {
+  display: flex;
+  gap: 15px;
+}
 
-    .nav-desktop {
-      display: flex;
-      gap: 15px;
-    }
+/* Buttons style for desktop */
+.nav-desktop a {
+  padding: 10px 15px;
+  background: #a020f0;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+.nav-desktop a:hover {
+  background: #8600c9;
+}
 
-    .nav-desktop a {
-      padding: 10px 15px;
-      background: #a020f0;
-      color: white;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-    .nav-desktop a:hover {
-      background: #8600c9;
-    }
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+  /* Hide desktop nav */
+  .nav-desktop {
+    display: none;
+  }
+  /* Show hamburger and mobile nav */
+  .hamburger {
+    display: block;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+  }
+  #mobileNav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    width: 220px;
+    background: #1c1c1c;
+    padding-top: 60px;
+    gap: 20px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+    z-index: 9999;
+  }
+  #mobileNav.nav-open {
+    transform: translateX(0);
+  }
+  /* Style mobile nav links as buttons */
+  #mobileNav a {
+    padding: 12px 20px;
+    background-color: #a020f0;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+  }
+  #mobileNav a:hover {
+    background-color: #8600c9;
+  }
+}
 
-    @media screen and (max-width: 768px) {
-      .nav-desktop {
-        display: none;
-      }
-      .hamburger {
-        display: block;
-        font-size: 30px;
-        cursor: pointer;
-        color: white;
-        z-index: 10000;
-        position: relative;
-      }
-      #mobileNav {
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 220px;
-        background: #1c1c1c;
-        padding-top: 60px;
-        gap: 20px;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-        z-index: 9999;
-        will-change: transform;
-      }
-      #mobileNav.nav-open {
-        transform: translateX(0);
-      }
-      #mobileNav a {
-        padding: 12px 20px;
-        background-color: #a020f0;
-        color: white;
-        border-radius: 5px;
-        font-weight: bold;
-        text-decoration: none;
-        text-align: center;
-      }
-      #mobileNav a:hover {
-        background-color: #8600c9;
-      }
-    }
+/* ======= Fixed carousel container height and spacing ======= */
+.carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  min-height: 500px; /* Prevent collapse */
+  margin-bottom: 2rem; /* Add space below carousel */
+}
 
-    .carousel {
-      width: 100%;
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+  flex: 0 0 100%; /* fix this line */
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: auto;  /* make height automatic */
+  max-height: 500px; /* limit max height on large screens */
+  display: block;
+  object-fit: cover;
+}
+
+/* Adjust carousel min-height for smaller screens */
+@media (max-width: 768px) {
+  .carousel {
+    min-height: 300px; /* smaller height on mobile */
+  }
+  .carousel-slide img {
+    max-height: 300px; /* smaller max height on mobile */
+  }
+}
+
+/* Player cards container horizontal scroll on mobile */
+.player-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 1em;
+  padding: 1em 0;
+  scroll-behavior: smooth;
+  height: 4..3.336600px; /* ⬅️ Add or increase this value */
+}
+
+/* Player cards sizing */
+.player-card {
+      min-width: 250px;
+      background: #1c2541;
+      border-radius: 10px;
       overflow: hidden;
-      position: relative;
-      min-height: 500px;
-      margin-bottom: 2rem;
+      box-shadow: 0 0 10px #3a506b;
     }
 
-    .carousel-track {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .carousel-slide {
-      flex: 0 0 100%;
-      position: relative;
-    }
-
-    .carousel-slide img {
+    .player-card img {
       width: 100%;
-      height: auto;
-      max-height: 500px;
-      display: block;
+      height: 200px;
       object-fit: cover;
     }
 
-    @media (max-width: 768px) {
-      .carousel {
-        min-height: 300px;
-      }
-      .carousel-slide img {
-        max-height: 300px;
-      }
+    .player-info {
+      padding: 1em;
+      background: #3a506b;
     }
+/* About and Contact sections padding on laptop */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .about-us, .contact {
+    padding: 60px 40px;
+  }
+}
 
-   .player-container {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding: 15px;
-    scrollbar-width: thin; /* Firefox */
+/* Make header wrap nicely on small laptops */
+header {
+  flex-wrap: wrap;
+}
+
+/* Hamburger z-index to be above carousel */
+.hamburger {
+  z-index: 10000;
+  position: relative;
+}
+
+/* Smooth mobile nav sliding */
+#mobileNav {
+  will-change: transform;
+}
+
+/* Fix toggleMenu to only toggle nav-open */
+function toggleMenu() {
+  const mobileNav = document.getElementById('mobileNav');
+  mobileNav.classList.toggle('nav-open');
+}
+
+ .player-info {
+    padding: 1em;
+    background: #3a506b;
   }
 
-  /* Webkit scrollbar styling */
-  .player-container::-webkit-scrollbar {
-    height: 8px;
-  }
-  .player-container::-webkit-scrollbar-thumb {
-    background-color: #3a506b;
-    border-radius: 4px;
+  .about-us, .contact {
+    padding: 40px 20px;
+    background: #1a1a1a;
+    margin-top: 40px;
   }
 
-  /* Player card styling */
-  .player-card {
-    flex: 0 0 200px; /* fixed width */
-    height: 350px;
-    background: linear-gradient(145deg, #1c2541, #3a506b);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 0 15px #0ff3ff30;
-    border-radius: 12px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    overflow: hidden;
+  .about-us h2{
+    color: #f4c10f;
+    margin-bottom: 20px;
+  }
+  .contact h1 {
+    color: #f4c10f;
+    margin-bottom: 20px;
+  }
+  .about-us p {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.6;
+  }
+  .contact form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  }
+
+  .contact input,
+  .contact textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .contact button {
+    padding: 10px;
+    font-size: 1rem;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.3s;
     cursor: pointer;
   }
 
-  .player-card img {
-    width: 100%;
-    height: 130px;
+  .contact button:hover {
+    background: yellow;
+    color: black;
+  }
+  .download-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
     border-radius: 8px;
-    object-fit: cover;
-    flex-shrink: 0;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
   }
 
-  .player-info:first-of-type {
-    font-weight: bold;
-    font-size: 18px;
-    color: #f4c10f;
-    margin-bottom: 8px;
-    flex-shrink: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .download-btn:hover {
+    background-color: #218838;
   }
-
-  .player-info:last-of-type {
-    color: #fff;
-    font-size: 14px;
-    line-height: 1.4;
-    overflow-y: auto;
-    flex-grow: 1;
-    padding-right: 6px;
-    white-space: normal;
-    word-wrap: break-word;
+  .center-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px 20px; /* optional padding */
+    background-color: #1a1a1a; /* optional background to match design */
   }
-
-  /* Responsive: on mobile, show only 1 card width */
-  @media (max-width: 600px) {
-    .player-container {
-      padding: 10px;
-    }
-    .player-card {
-      flex: 0 0 90vw; /* about full width on mobile */
-      height: 300px;
-    }
   }
-      .carousel-dots {
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .carousel-dot {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      background-color: #bbb;
-      border-radius: 50%;
-      margin: 0 4px;
-      cursor: pointer;
-    }
-
-    .carousel-dot.active {
-      background-color: #333;
-    }
-
-    .about-us, .contact {
-      padding: 40px 20px;
-      background: #1a1a1a;
-      margin-top: 40px;
-    }
-
-    .about-us h2, .contact h1 {
-      color: #f4c10f;
-      margin-bottom: 20px;
-    }
-
-    .about-us p {
-      font-size: 1rem;
-      color: #ccc;
-      line-height: 1.6;
-    }
-
-    .contact form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .contact input, .contact textarea {
-      padding: 10px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-    }
-
-    .contact button {
-      padding: 10px;
-      font-size: 1rem;
-      background: green;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      transition: background 0.3s;
-      cursor: pointer;
-    }
-
-    .contact button:hover {
-      background: yellow;
-      color: black;
-    }
-
-    .download-btn {
-      background-color: #28a745;
-      color: white;
-      padding: 12px 24px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-
-    .download-btn:hover {
-      background-color: #218838;
-    }
-
-    .center-box {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 40px 20px;
-      background-color: #1a1a1a;
-    }
-
-    .hall-of-flames {
-      padding: 2em;
-      text-align: center;
-    }
-
-    .hall-of-flames h2 {
-      font-size: 2em;
-      position: relative;
-      display: inline-block;
-      color: orange;
-      text-shadow: 0 0 5px red, 0 0 10px yellow;
-    }
-
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .about-us, .contact {
-        padding: 60px 40px;
-      }
-    }
+ 
   </style>
+<style>
+@keyframes burnGlow {
+  0%, 100% {
+    color: orange;
+    text-shadow:
+      0 0 5px red,
+      0 0 10px red,
+      0 0 20px darkred;
+  }
+  50% {
+    color: #ff8c00; /* a bit brighter orange */
+    text-shadow:
+      0 0 8px red,
+      0 0 15px red,
+      0 0 30px darkred;
+  }
+}
+.burning-text {
+  animation: burnGlow 3s ease-in-out infinite;
+  font-weight: bold;
+  font-size: 4rem;
+  text-align: center;
+  margin: 30px 0;
+  position: relative;
+}
+</style>
+
+<h1 class="burning-text">Hall of Flames🔥</h1>
+
+
+
 </head>
 <body>
-<header>
+  <header>
   <h1>Premier League Central</h1>
 
   <!-- Hamburger only on mobile -->
@@ -362,8 +353,10 @@
 <div class="carousel-dots"></div>
   
   <section class="hall-of-flames">
-    <h2>Hall of Flames🔥</h2>
-    <div class="player-container">
+   <h1 style="font-size: 4rem; text-align: center; font-weight: bold; margin: 30px 0;" class="burning-text">
+  Hall of Flames🔥
+</h1>
+    <div class="player-container" id="playerScroll">
    
       <div class="player-card">
         <img src="PPL Images/Screenshot 2025-05-06 123934.png" alt="Amit Kumar">
@@ -479,18 +472,6 @@
     mobileNav.classList.toggle('nav-open');
   }
 </script>
-<script>
- document.querySelectorAll('.player-info:last-of-type').forEach(div => {
-    const words = div.textContent.trim().split(/\s+/);
-    const newLines = [];
-    for (let i = 0; i < words.length; i += 6) {
-      newLines.push(words.slice(i, i + 6).join(' '));
-    }
-    div.innerHTML = newLines.join('<br>');
-  });
-</script>
-<script
-  src='https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1'>
-</script>
+
 </body>
 </html>
