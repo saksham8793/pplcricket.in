@@ -168,21 +168,25 @@
 }
 
 .player-info {
-  padding: 1rem;
+  padding: 0.8rem;
   color: #ffffff;
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 0.95rem;
+  line-height: 1.4;
   word-wrap: break-word;
   background-color: #3a506b;
+  max-height: 100px;
+  overflow: auto;
+  scrollbar-width: thin; /* Firefox */
 }
 
 .player-info:first-of-type {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #f4c10f;
   margin-bottom: 0.5rem;
-}
- 
+  max-height: none; /* Ensure heading is not clipped */
+  overflow: visible;
+} 
       .carousel-dots {
       text-align: center;
       margin-top: 10px;
