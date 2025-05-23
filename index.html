@@ -148,15 +148,20 @@
   background-color: #1a1a1a;
   border: 1px solid #444;
   border-radius: 10px;
-  padding: 20px;
+  padding: 16px;
   margin: 10px;
-  flex: 1 1 calc(80% - 40px);     /* Wider: 2 per row */
-  max-width: calc(80% - 40px);    /* Wider: 2 per row */
+  flex: 1 1 calc(50% - 40px);
+  max-width: calc(50% - 40px);
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 250px;              /* Set fixed height */
+  overflow: hidden;           /* Prevent overflow */
 }
 
-
+.player-card img {
+  max-height: 100px;
+  object-fit: cover;
+}
 
     .player-card img {
       width: 100%;
