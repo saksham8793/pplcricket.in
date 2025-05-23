@@ -103,27 +103,27 @@
   }
 }
      .carousel {
+  width: 100%;
   max-width: 100%;
-  width: 800px;
-  margin: 0 auto;
-  position: relative;
   overflow: hidden;
+  position: relative;
 }
 
 .carousel-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
+  width: 100%;
 }
 
 .carousel-slide {
-  min-width: 100%;
+  width: 100%;
   flex-shrink: 0;
 }
 
 .carousel-slide img {
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
 }
 
 .carousel-dots {
@@ -150,7 +150,6 @@
     width: 100%;
   }
 }
-
     .hall-of-flames {
       padding: 2em;
       text-align: center;
@@ -305,6 +304,7 @@
 </div>
 
 <div class="carousel-dots"></div>
+
   
   <section class="hall-of-flames">
     <h2>Hall of Flames🔥</h2>
@@ -386,14 +386,14 @@ Here, players experience the thrill of competitive cricket with the camaraderie 
   });
   </script>
   <script>
-    const track = document.querySelector('.carousel-track');
+  const track = document.querySelector('.carousel-track');
 const slides = Array.from(track.children);
 const dotsContainer = document.querySelector('.carousel-dots');
 let currentIndex = 0;
 let interval;
 
 function goToSlide(index) {
-  const slideWidth = slides[0].getBoundingClientRect().width;
+  const slideWidth = slides[0].clientWidth;
   track.style.transform = `translateX(-${slideWidth * index}px)`;
   document.querySelectorAll('.carousel-dot').forEach(dot => dot.classList.remove('active'));
   document.querySelectorAll('.carousel-dot')[index].classList.add('active');
@@ -421,7 +421,7 @@ function nextSlide() {
 }
 
 function startAutoSlide() {
-  interval = setInterval(nextSlide, 1500); // 1.5 seconds
+  interval = setInterval(nextSlide, 1500); // show each for 1.5 seconds
 }
 
 createDots();
