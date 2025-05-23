@@ -144,7 +144,7 @@
       scroll-behavior: smooth;
     }
 .player-card {
-  width: 320px; /* Fixed width for all cards */
+  width: 320px; /* Fixed width */
   background: linear-gradient(145deg, #1c2541, #3a506b);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 0 15px #0ff3ff30;
   border-radius: 15px;
@@ -174,9 +174,9 @@
   line-height: 1.4;
   word-wrap: break-word;
   background-color: #3a506b;
-  max-height: 100px;
+  max-height: 60px;       /* Adjusted from 100px to 60px */
   overflow: auto;
-  scrollbar-width: thin; /* Firefox support */
+  scrollbar-width: thin;
 }
 
 .player-info:first-of-type {
@@ -184,7 +184,7 @@
   font-size: 1.1rem;
   color: #f4c10f;
   margin-bottom: 0.5rem;
-  max-height: none; /* Don't limit the heading */
+  max-height: none;
   overflow: visible;
 }
       .carousel-dots {
