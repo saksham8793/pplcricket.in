@@ -102,34 +102,54 @@
     background-color: #8600c9;
   }
 }
-      .image-scroller {
+     .carousel {
+  max-width: 100%;
+  width: 800px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  flex-shrink: 0;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.carousel-dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.carousel-dot {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: #bbb;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.carousel-dot.active {
+  background-color: #333;
+}
+
+@media (max-width: 768px) {
+  .carousel {
     width: 100%;
-    overflow: hidden;
   }
-
-  .slider {
-    display: flex;
-    width: max-content;
-    animation: scroll 60s linear infinite;
-  }
-
-  .slider img {
-    width: 100vw;
-    height: auto;
-    flex-shrink: 0;
-    object-fit: cover;
-  }
-
-  @media (min-width: 768px) {
-    .slider img {
-      width: 800px;
-    }
-  }
-
-  @keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* Move halfway because we duplicated */
-  }
+}
 
     .hall-of-flames {
       padding: 2em;
@@ -273,21 +293,18 @@
   </nav>
   </header>
   
-<div class="image-scroller">
-  <div class="slider">
-    <!-- First set of images -->
-    <img src="PPL Images/Garud_Commando_Team_1600x500.png" alt="Slide 1">
-    <img src="PPL Images/Ghatak_Force_Team_1600x600.png" alt="Slide 2">
-    <img src="PPL Images/Para_Special_Forces_Team_1600x600.png" alt="Slide 3">
-    <img src="PPL Images/May 23, 2025, 02_24_39 PM.png" alt="Slide 4">
-
-    <!-- Duplicate set for smooth loop -->
-    <img src="PPL Images/Garud_Commando_Team_1600x500.png" alt="Slide 1 Clone">
-    <img src="PPL Images/Ghatak_Force_Team_1600x600.png" alt="Slide 2 Clone">
-    <img src="PPL Images/Para_Special_Forces_Team_1600x600.png" alt="Slide 3 Clone">
-    <img src="PPL Images/May 23, 2025, 02_24_39 PM.png" alt="Slide 4 Clone">
+<div class="carousel">
+  <div class="carousel-track">
+    <div class="carousel-slide"><img src="PPL Images/Garud_Commando_Team_1600x500.png" alt="1"></div>
+    <div class="carousel-slide"><img src="PPL Images/Ghatak_Force_Team_1600x600.png" alt="2"></div>
+    <div class="carousel-slide"><img src="PPL Images/Para_Special_Forces_Team_1600x600.png" alt="3"></div>
+    <div class="carousel-slide"><img src="PPL Images/May 23, 2025, 02_24_39 PM.png" alt="4"></div>
+    <div class="carousel-slide"><img src="PPL Images/May 23, 2025, 02_24_39 PM.png" alt="5"></div>
+    <div class="carousel-slide"><img src="PPL Images/May 23, 2025, 02_24_39 PM.png" alt="6"></div>
   </div>
 </div>
+
+<div class="carousel-dots"></div>
   
   <section class="hall-of-flames">
     <h2>Hall of Flames🔥</h2>
@@ -367,6 +384,48 @@ Here, players experience the thrill of competitive cricket with the camaraderie 
       document.getElementById('mobileNav').classList.remove('nav-open');
     });
   });
+  </script>
+  <script>
+    const track = document.querySelector('.carousel-track');
+const slides = Array.from(track.children);
+const dotsContainer = document.querySelector('.carousel-dots');
+let currentIndex = 0;
+let interval;
+
+function goToSlide(index) {
+  const slideWidth = slides[0].getBoundingClientRect().width;
+  track.style.transform = `translateX(-${slideWidth * index}px)`;
+  document.querySelectorAll('.carousel-dot').forEach(dot => dot.classList.remove('active'));
+  document.querySelectorAll('.carousel-dot')[index].classList.add('active');
+  currentIndex = index;
+}
+
+function createDots() {
+  slides.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.classList.add('carousel-dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => {
+      clearInterval(interval);
+      goToSlide(i);
+      startAutoSlide();
+    });
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function nextSlide() {
+  let nextIndex = currentIndex + 1;
+  if (nextIndex >= slides.length) nextIndex = 0;
+  goToSlide(nextIndex);
+}
+
+function startAutoSlide() {
+  interval = setInterval(nextSlide, 1500); // 1.5 seconds
+}
+
+createDots();
+startAutoSlide();
   </script>
   <!-- JotForm loads after scroll -->
   <script
