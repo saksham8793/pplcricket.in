@@ -102,45 +102,33 @@
     background-color: #8600c9;
   }
 }
-       .image-scroller {
+      .image-scroller {
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto 40px;
     overflow: hidden;
-    position: relative;
   }
 
   .slider {
     display: flex;
-    width: fit-content;
-    animation: scroll 20s linear infinite;
+    width: max-content;
+    animation: scroll 60s linear infinite;
   }
 
   .slider img {
-    width: 100vw; /* Each image takes full screen width on mobile */
+    width: 100vw;
     height: auto;
     flex-shrink: 0;
     object-fit: cover;
-  }
-
-  @keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-300%); } /* Adjust depending on how many images */
   }
 
   @media (min-width: 768px) {
     .slider img {
       width: 800px;
     }
+  }
 
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      20% { transform: translateX(-100%); }
-      40% { transform: translateX(-200%); }
-      60% { transform: translateX(-300%); }
-      80% { transform: translateX(-400%); }
-      100% { transform: translateX(-500%); }
-    }
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Move halfway because we duplicated */
   }
 
     .hall-of-flames {
@@ -283,19 +271,24 @@
     <a href="#contact">Join Us</a>
     <a href="statestic.html" target="_blank">Tournament Winners</a>
   </nav>
-</header>
-
- <div class="image-scroller">
+  </header>
+  
+<div class="image-scroller">
   <div class="slider">
+    <!-- First set of images -->
     <img src="PPL Images/Garud_Commando_Team_1600x500.png" alt="Slide 1">
     <img src="PPL Images/Ghatak_Force_Team_1600x600.png" alt="Slide 2">
     <img src="PPL Images/Para_Special_Forces_Team_1600x600.png" alt="Slide 3">
     <img src="PPL Images/May 23, 2025, 02_24_39 PM.png" alt="Slide 4">
-    <img src="PPL Images/May 23, 2025, 02_24_39 PM.png" alt="Slide 5">
-    <img src="PPL Images/May 23, 2025, 02_24_39 PM.png" alt="Slide 6">
+
+    <!-- Duplicate set for smooth loop -->
+    <img src="PPL Images/Garud_Commando_Team_1600x500.png" alt="Slide 1 Clone">
+    <img src="PPL Images/Ghatak_Force_Team_1600x600.png" alt="Slide 2 Clone">
+    <img src="PPL Images/Para_Special_Forces_Team_1600x600.png" alt="Slide 3 Clone">
+    <img src="PPL Images/May 23, 2025, 02_24_39 PM.png" alt="Slide 4 Clone">
   </div>
 </div>
-
+  
   <section class="hall-of-flames">
     <h2>Hall of Flames🔥</h2>
     <div class="player-container" id="playerScroll">
