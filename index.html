@@ -144,8 +144,8 @@
       scroll-behavior: smooth;
     }
 .player-card {
-  width: 200px;           /* Width of the card */
-  height: 400px;          /* Height is double the width */
+  width: 200px;
+  height: 400px;
   background: linear-gradient(145deg, #1c2541, #3a506b);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 0 15px #0ff3ff30;
   border-radius: 12px;
@@ -180,9 +180,11 @@
   color: #fff;
   font-size: 14px;
   line-height: 1.4;
-  overflow-y: auto; /* Add scroll if needed */
-  flex-grow: 1;      /* Take remaining space */
-  padding-right: 6px; /* for scrollbar padding */
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-right: 6px;
+  white-space: normal;
+  word-wrap: break-word;
 }
       .carousel-dots {
       text-align: center;
@@ -454,6 +456,19 @@
     const mobileNav = document.getElementById('mobileNav');
     mobileNav.classList.toggle('nav-open');
   }
+</script>
+<script>
+  document.querySelectorAll('.player-info:last-of-type').forEach(div => {
+    const words = div.textContent.trim().split(/\s+/);
+    const newLines = [];
+    for (let i = 0; i < words.length; i += 4) {
+      newLines.push(words.slice(i, i + 4).join(' '));
+    }
+    div.innerHTML = newLines.join('<br>');
+  });
+</script>
+<script
+  src='https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1'>
 </script>
 </body>
 </html>
