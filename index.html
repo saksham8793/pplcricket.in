@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+   
+
+  
+     
+      <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -102,79 +106,56 @@
     background-color: #8600c9;
   }
 }
-     .carousel {
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-    position: relative;
-    margin: 0 auto;
-  }
 
-  .carousel-track {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    width: 100%;
-  }
+/* ======= Fixed carousel container height and spacing ======= */
+.carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  min-height: 500px; /* Prevent collapse */
+  margin-bottom: 2rem; /* Add space below carousel */
+}
 
-  .carousel-slide {
-    width: 100%;
-    aspect-ratio: 16 / 6; /* Keep consistent 1600x600 feel */
-    flex-shrink: 0;
-    overflow: hidden;
-  }
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
 
+.carousel-slide {
+  flex: 0 0 100%; /* fix this line */
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: auto;  /* make height automatic */
+  max-height: 500px; /* limit max height on large screens */
+  display: block;
+  object-fit: cover;
+}
+
+/* Adjust carousel min-height for smaller screens */
+@media (max-width: 768px) {
+  .carousel {
+    min-height: 300px; /* smaller height on mobile */
+  }
   .carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+    max-height: 300px; /* smaller max height on mobile */
   }
+}
 
-  .carousel-dots {
-    text-align: center;
-    margin-top: 10px;
-  }
+/* Player cards container horizontal scroll on mobile */
+.player-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 1em;
+  padding: 1em 0;
+  scroll-behavior: smooth;
+  height: 4..3.336600px; /* ⬅️ Add or increase this value */
+}
 
-  .carousel-dot {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    background-color: #bbb;
-    border-radius: 50%;
-    margin: 0 5px;
-    cursor: pointer;
-  }
-
-  .carousel-dot.active {
-    background-color: #333;
-  }
-
-  @media (max-width: 768px) {
-    .carousel-slide {
-      aspect-ratio: 4 / 3; /* Taller on phones */
-    }
-  }
-    .hall-of-flames {
-      padding: 2em;
-      text-align: center;
-    }
-
-    .hall-of-flames h2 {
-      font-size: 2em;
-      position: relative;
-      display: inline-block;
-      color: orange;
-      text-shadow: 0 0 5px red, 0 0 10px yellow;
-    }
-
-    .player-container {
-      display: flex;
-      overflow-x: auto;
-      gap: 1em;
-      padding: 1em 0;
-    }
-
-    .player-card {
+/* Player cards sizing */
+.player-card {
       min-width: 250px;
       background: #1c2541;
       border-radius: 10px;
@@ -192,30 +173,63 @@
       padding: 1em;
       background: #3a506b;
     }
+/* About and Contact sections padding on laptop */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .about-us, .contact {
+    padding: 60px 40px;
+  }
+}
 
-    .about-us, .contact {
-      padding: 40px 20px;
-      background: #1a1a1a;
-      margin-top: 40px;
-    }
+/* Make header wrap nicely on small laptops */
+header {
+  flex-wrap: wrap;
+}
 
-    .about-us h2{
-      color: #f4c10f;
-      margin-bottom: 20px;
-    }
-    .contact h1 {
-      color: #f4c10f;
-      margin-bottom: 20px;
-    }
-    .about-us p {
-      font-size: 1rem;
-      color: #ccc;
-      line-height: 1.6;
-    }
-    .contact form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* Hamburger z-index to be above carousel */
+.hamburger {
+  z-index: 10000;
+  position: relative;
+}
+
+/* Smooth mobile nav sliding */
+#mobileNav {
+  will-change: transform;
+}
+
+/* Fix toggleMenu to only toggle nav-open */
+function toggleMenu() {
+  const mobileNav = document.getElementById('mobileNav');
+  mobileNav.classList.toggle('nav-open');
+}
+
+ .player-info {
+    padding: 1em;
+    background: #3a506b;
+  }
+
+  .about-us, .contact {
+    padding: 40px 20px;
+    background: #1a1a1a;
+    margin-top: 40px;
+  }
+
+  .about-us h2{
+    color: #f4c10f;
+    margin-bottom: 20px;
+  }
+  .contact h1 {
+    color: #f4c10f;
+    margin-bottom: 20px;
+  }
+  .about-us p {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.6;
+  }
+  .contact form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   }
 
   .contact input,
@@ -241,29 +255,30 @@
     background: yellow;
     color: black;
   }
-    .download-btn {
-      background-color: #28a745;
-      color: white;
-      padding: 12px 24px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
+  .download-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
 
-    .download-btn:hover {
-      background-color: #218838;
-    }
-    .center-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 40px 20px; /* optional padding */
-  background-color: #1a1a1a; /* optional background to match design */
-}
+  .download-btn:hover {
+    background-color: #218838;
+  }
+  .center-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px 20px; /* optional padding */
+    background-color: #1a1a1a; /* optional background to match design */
+  }
+  }
   </style>
 </head>
 <body>
@@ -298,53 +313,22 @@
   
 <div class="carousel">
   <div class="carousel-track">
-    <div class="carousel-slide">
     <div class="carousel-slide"><img src="PPL Images/Garud_Commando_Team_1600x500.png" alt="1"></div>
-    <div class="team-name">TEAM MARCOS</div>
-  <div class="bottom-left">Owner: Saurabh G</div>
-  <div class="bottom-right">Captain: Tilak</div>
-</div>
-    <div class="carousel-slide">
     <div class="carousel-slide"><img src="PPL Images/Ghatak_Force_Team_1600x600.png" alt="2"></div>
-    <div class="team-name">TEAM MARCOS</div>
-  <div class="bottom-left">Owner: Saurabh G</div>
-  <div class="bottom-right">Captain: Tilak</div>
-</div>
-    <div class="carousel-slide">
     <div class="carousel-slide"><img src="PPL Images/Para_Special_Forces_Team_1600x600.png" alt="3"></div>
-    <div class="team-name">TEAM MARCOS</div>
-  <div class="bottom-left">Owner: Saurabh G</div>
-  <div class="bottom-right">Captain: Tilak</div>
-</div>
-    <div class="carousel-slide">
-    <div class="carousel-slide"><img src="PPL Images/create an image of 6.png" alt="4"></div>
-    <div class="team-name">TEAM MARCOS</div>
-  <div class="bottom-left">Owner: Saurabh G</div>
-  <div class="bottom-right">Captain: Tilak</div>
-</div>
-    <div class="carousel-slide">
-    <div class="carousel-slide"><img src="PPL Images/create an image of 6.png" alt="5"></div>
-    <div class="team-name">TEAM MARCOS</div>
-  <div class="bottom-left">Owner: Saurabh G</div>
-  <div class="bottom-right">Captain: Tilak</div>
-</div>
-    <div class="carousel-slide">
-    <div class="carousel-slide"><img src="PPL Images/create an image of 6.png" alt="6"></div>
-     <div class="team-name">TEAM MARCOS</div>
-  <div class="bottom-left">Owner: Saurabh G</div>
-  <div class="bottom-right">Captain: Tilak</div>
-</div>
+    <div class="carousel-slide"><img src="PPL Images/Marcos_Team_Resized_1500x500.png" alt="4"></div>
+    <div class="carousel-slide"><img src="PPL Images/Marcos_Team_Resized_1500x500.png" alt="5"></div>
+    <div class="carousel-slide"><img src="PPL Images/Marcos_Team_Resized_1500x500.png" alt="6"></div>
   </div>
 </div>
 
 <div class="carousel-dots"></div>
-
   
   <section class="hall-of-flames">
     <h2>Hall of Flames🔥</h2>
     <div class="player-container" id="playerScroll">
    
-       <div class="player-card">
+      <div class="player-card">
         <img src="PPL Images/Screenshot 2025-05-06 123934.png" alt="Amit Kumar">
         <h3 class="player-info">Amit Kumar</h3>
          <div class="player-info">Amit Kumar - Amit Kumar became Player of the Match twice in PPL finals, showcasing strong batting and bowling performances. He played 55 matches with an MVP score of 16.890.</div>
@@ -382,98 +366,83 @@
 
     </div>
   </section>
-
-  <section class="about-us" id="about">
-    <h2>About Us</h2>
-    <h3>PPL Cricket Turf: The PPL Brotherhood</h3>
-    <p>Post-COVID, mid-2022, cricket lovers stranded at home, missing the smack of the ball and the banter that makes every match unforgettable. That’s when<b>Gaurav Palhekar (aka GP Bhai)</b>had an idea—why not bring the gang back together and create a tournament where fierce competition meets unbreakable brotherhood? And just like that,<b>PPL was born—
-    </b>the ultimate battleground for cricketers from all walks of life, all ages, and all skill levels.
-  
-    Fast forward three years,<b>13 seasons down</b>, and we’re gearing up for<b>PPL Season 14</b>
-    -bigger, bolder, and packed with even more nail-biting rivalries. PPL has earned the title of<b>“IPL of Pune”</b>, where<b>six teams battle it out</b>, each led by a powerhouse owner, fighting for glory in the most intense auction-driven player selection. But PPL is more than just a league—it’s a 
-    <b>family</b>, built on competition, camaraderie, and some hilariously questionable cricketing decisions.
-
-    Behind the scenes, a<b>dedicated Committee</b>ensures each season is more thrilling than the last. And if you think the drama and heroics are reserved for the turf, think again! Our<b> official YouTube channel, “turf_ppl,”</b>captures<b>every epic moment—
-    </b>from jaw-dropping catches to post-match leg-pulling sessions.
-
-    So, if you’re ready to witness<b>grit, passion, and the kind of cricket banter that could start (and settle) wars,</b>you’re in the right place.<b>Welcome to the PPL Brotherhood—where the spirit of cricket is alive, well, and occasionally hilariously competitive! 🏏🔥
-    </b>
-</p>
-  </section>
   <div class="center-box">
   <h1>Download Our App From Here ⬇️</h1>
   <a href="https://pplcricket.in/PPL+Cricket-0_2_debug.apk" download class="download-btn">
     Download APK
   </a>
 </div>
-<section class="contact" id="contact">
-  <h1 style="font-size: 3rem;">Join Us</h1>
-  <form action="https://formspree.io/f/mzzrwwqw" method="POST">
-    <input type="text" name="name" placeholder="Your Name" required />
-    <input type="email" name="email" placeholder="Your Email" required />
-    <input type="text" name="whatsapp" placeholder="Your WhatsApp Number" required />
-    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
-</section>
-  <script>
-  function toggleMenu() {
-    const nav = document.getElementById('mobileNav');
-    nav.classList.toggle('nav-open');
-  }
+  <section class="about-us" id="about">
+    <h2>About Us</h2>
+    <h3>PPL Cricket Turf: The PPL Brotherhood</h3>
+    <p>Post-COVID, mid-2022, cricket lovers stranded at home, missing the smack of the ball and the banter that makes every match unforgettable. That’s when <b>Gaurav Palhekar (aka GP Bhai)</b>had an idea—why not bring the gang back together and create a tournament where fierce competition meets unbreakable brotherhood? And just like that, <b>PPL was born—
+    </b>the ultimate battleground for cricketers from all walks of life, all ages, and all skill levels.
+  
+    Fast forward three years, <b>13 seasons down</b>, and we’re gearing up for <b>PPL Season 14</b>
+    -bigger, bolder, and packed with even more nail-biting rivalries. PPL has earned the title of <b>“IPL of Pune”</b>, where <b>six teams battle it out</b>, each led by a powerhouse owner, fighting for glory in the most intense auction-driven player selection. But PPL is more than just a league—it’s a 
+    <b>family</b>, built on competition, camaraderie, and some hilariously questionable cricketing decisions.
 
-  // Close mobile menu on link click
-  document.querySelectorAll('#mobileNav a').forEach(link => {
-    link.addEventListener('click', () => {
-      document.getElementById('mobileNav').classList.remove('nav-open');
-    });
-  });
-  </script>
-  <script>
+    Behind the scenes, a <b>dedicated Committee</b>ensures each season is more thrilling than the last. And if you think the drama and heroics are reserved for the turf, think again! Our<b> official YouTube channel, “turf_ppl,”</b>captures<b>every epic moment—
+    </b>from jaw-dropping catches to post-match leg-pulling sessions.
+
+    So, if you’re ready to witness <b>grit, passion, and the kind of cricket banter that could start (and settle) wars,</b>you’re in the right place.<b>Welcome to the PPL Brotherhood—where the spirit of cricket is alive, well, and occasionally hilariously competitive! 🏏🔥
+    </b>
+</p>
+  </section>
+
+  <section class="contact" id="contact">
+    <h1>Join Us</h1>
+    <form>
+      <input type="text" placeholder="Name" required />
+      <input type="email" placeholder="Email" required />
+      <textarea placeholder="Your Message" rows="5"></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+<script>
   const track = document.querySelector('.carousel-track');
   const slides = Array.from(track.children);
-  const dotsContainer = document.querySelector('.carousel-dots');
-  let currentIndex = 0;
-  let interval;
-
-  function goToSlide(index) {
-    const slideWidth = slides[0].clientWidth;
-    track.style.transform = `translateX(-${slideWidth * index}px)`;
-    document.querySelectorAll('.carousel-dot').forEach(dot => dot.classList.remove('active'));
-    document.querySelectorAll('.carousel-dot')[index].classList.add('active');
-    currentIndex = index;
+  const dotsNav = document.querySelector('.carousel-dots');
+  
+  // Create dots dynamically
+  slides.forEach((slide, index) => {
+    const dot = document.createElement('span');
+    dot.classList.add('carousel-dot');
+    if (index === 0) dot.classList.add('active');
+    dotsNav.appendChild(dot);
+  });
+  
+  const dots = Array.from(dotsNav.children);
+  let currentSlide = 0;
+  
+  function moveToSlide(index) {
+    track.style.transform = 'translateX(-' + index * 100 + '%)';
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[index].classList.add('active');
+    currentSlide = index;
   }
-
-  function createDots() {
-    slides.forEach((_, i) => {
-      const dot = document.createElement('span');
-      dot.classList.add('carousel-dot');
-      if (i === 0) dot.classList.add('active');
-      dot.addEventListener('click', () => {
-        clearInterval(interval);
-        goToSlide(i);
-        startAutoSlide();
-      });
-      dotsContainer.appendChild(dot);
+  
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      moveToSlide(index);
     });
+  });
+  
+  // Auto slide every 5 seconds
+  setInterval(() => {
+    let nextSlide = currentSlide + 1;
+    if (nextSlide >= slides.length) nextSlide = 0;
+    moveToSlide(nextSlide);
+  }, 5000);
+  
+  // Hamburger toggle function
+  function toggleMenu() {
+    const mobileNav = document.getElementById('mobileNav');
+    mobileNav.classList.toggle('nav-open');
   }
-
-  function nextSlide() {
-    let nextIndex = currentIndex + 1;
-    if (nextIndex >= slides.length) nextIndex = 0;
-    goToSlide(nextIndex);
-  }
-
-  function startAutoSlide() {
-    interval = setInterval(nextSlide, 1500); // 1.5 seconds per slide
-  }
-
-  createDots();
-  startAutoSlide();
-  </script>
-  <!-- JotForm loads after scroll -->
-  <script
-  src='https://cdn.jotfor.ms/agent/embedjs/0196d4eff4f278d0bc9c6194a018892938aa/embed.js?skipWelcome=1&maximizable=1'>
 </script>
+
 </body>
 </html>
+
