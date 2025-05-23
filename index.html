@@ -173,45 +173,48 @@
       margin-top: 40px;
     }
 
-    .about-us h2, .contact h2 {
+    .about-us h2{
       color: #f4c10f;
       margin-bottom: 20px;
     }
-
+    .contact h1 {
+      color: #f4c10f;
+      margin-bottom: 20px;
+    }
     .about-us p {
       font-size: 1rem;
       color: #ccc;
       line-height: 1.6;
     }
-
     .contact form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
 
-    .contact input, .contact textarea {
-      padding: 10px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-    }
+  .contact input,
+  .contact textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+  }
 
-    .contact button {
-      padding: 10px;
-      font-size: 1rem;
-      background: green;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      transition: background 0.3s;
-      cursor: pointer;
-    }
+  .contact button {
+    padding: 10px;
+    font-size: 1rem;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+    cursor: pointer;
+  }
 
-    .contact button:hover {
-      background: yellow;
-      color: black;
-    }
+  .contact button:hover {
+    background: yellow;
+    color: black;
+  }
     .download-btn {
       background-color: #28a745;
       color: white;
@@ -332,12 +335,12 @@ Here, players experience the thrill of competitive cricket with the camaraderie 
     Download APK
   </a>
 </div>
- <section class="contact" id="contact">
+<section class="contact" id="contact">
   <h1>Join Us</h1>
   <form action="https://formspree.io/f/mzzrwwqw" method="POST">
     <input type="text" name="name" placeholder="Your Name" required />
     <input type="email" name="email" placeholder="Your Email" required />
-    <input type="text" name="Whatsapp Number" 
+    <input type="text" name="whatsapp" placeholder="Your WhatsApp Number" required />
     <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
     <button type="submit">Send Message</button>
   </form>
