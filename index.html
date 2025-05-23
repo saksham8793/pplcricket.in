@@ -136,56 +136,78 @@
       }
     }
 
+   .player-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 15px;
+    scrollbar-width: thin; /* Firefox */
+  }
+
+  /* Webkit scrollbar styling */
+  .player-container::-webkit-scrollbar {
+    height: 8px;
+  }
+  .player-container::-webkit-scrollbar-thumb {
+    background-color: #3a506b;
+    border-radius: 4px;
+  }
+
+  /* Player card styling */
+  .player-card {
+    flex: 0 0 200px; /* fixed width */
+    height: 350px;
+    background: linear-gradient(145deg, #1c2541, #3a506b);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 0 15px #0ff3ff30;
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .player-card img {
+    width: 100%;
+    height: 130px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .player-info:first-of-type {
+    font-weight: bold;
+    font-size: 18px;
+    color: #f4c10f;
+    margin-bottom: 8px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .player-info:last-of-type {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.4;
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 6px;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+  /* Responsive: on mobile, show only 1 card width */
+  @media (max-width: 600px) {
     .player-container {
-      display: flex;
-      overflow-x: auto;
-      gap: 1em;
-      padding: 1em 0;
-      scroll-behavior: smooth;
+      padding: 10px;
     }
-.player-card {
-  width: 400px;
-  height: 600px;
-  background: linear-gradient(145deg, #1c2541, #3a506b);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 0 15px #0ff3ff30;
-  border-radius: 12px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.player-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.player-info:first-of-type {
-  font-weight: bold;
-  font-size: 18px;
-  color: #f4c10f;
-  margin-bottom: 8px;
-  flex-shrink: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.player-info:last-of-type {
-  color: #fff;
-  font-size: 14px;
-  line-height: 1.4;
-  overflow-y: auto;
-  flex-grow: 1;
-  padding-right: 6px;
-  white-space: normal;
-  word-wrap: break-word;
-}
+    .player-card {
+      flex: 0 0 90vw; /* about full width on mobile */
+      height: 300px;
+    }
+  }
       .carousel-dots {
       text-align: center;
       margin-top: 10px;
@@ -341,7 +363,7 @@
   
   <section class="hall-of-flames">
     <h2>Hall of Flames🔥</h2>
-    <div class="player-container" id="playerScroll">
+    <div class="player-container">
    
       <div class="player-card">
         <img src="PPL Images/Screenshot 2025-05-06 123934.png" alt="Amit Kumar">
@@ -458,11 +480,11 @@
   }
 </script>
 <script>
-  document.querySelectorAll('.player-info:last-of-type').forEach(div => {
+ document.querySelectorAll('.player-info:last-of-type').forEach(div => {
     const words = div.textContent.trim().split(/\s+/);
     const newLines = [];
-    for (let i = 0; i < words.length; i += 4) {
-      newLines.push(words.slice(i, i + 4).join(' '));
+    for (let i = 0; i < words.length; i += 6) {
+      newLines.push(words.slice(i, i + 6).join(' '));
     }
     div.innerHTML = newLines.join('<br>');
   });
