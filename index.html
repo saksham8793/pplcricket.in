@@ -103,58 +103,57 @@
   }
 }
      .carousel {
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: 100%;
-}
-
-.carousel-slide {
-  width: 100%;
-  flex-shrink: 0;
-}
-
-.carousel-slide img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.carousel-dots {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.carousel-dot {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  background-color: #bbb;
-  border-radius: 50%;
-  margin: 0 5px;
-  cursor: pointer;
-}
-
-.carousel-dot.active {
-  background-color: #333;
-}
-@media (max-width: 768px) {
-  .carousel-slide {
-    aspect-ratio: 16 / 9; /* more vertical space for mobile */
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
   }
-}
 
-@media (max-width: 768px) {
-  .carousel {
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
     width: 100%;
   }
-}
+
+  .carousel-slide {
+    width: 100%;
+    aspect-ratio: 16 / 6; /* Keep consistent 1600x600 feel */
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .carousel-dots {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .carousel-dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-color: #bbb;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+
+  .carousel-dot.active {
+    background-color: #333;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-slide {
+      aspect-ratio: 4 / 3; /* Taller on phones */
+    }
+  }
     .hall-of-flames {
       padding: 2em;
       text-align: center;
@@ -392,45 +391,45 @@ Here, players experience the thrill of competitive cricket with the camaraderie 
   </script>
   <script>
   const track = document.querySelector('.carousel-track');
-const slides = Array.from(track.children);
-const dotsContainer = document.querySelector('.carousel-dots');
-let currentIndex = 0;
-let interval;
+  const slides = Array.from(track.children);
+  const dotsContainer = document.querySelector('.carousel-dots');
+  let currentIndex = 0;
+  let interval;
 
-function goToSlide(index) {
-  const slideWidth = slides[0].clientWidth;
-  track.style.transform = `translateX(-${slideWidth * index}px)`;
-  document.querySelectorAll('.carousel-dot').forEach(dot => dot.classList.remove('active'));
-  document.querySelectorAll('.carousel-dot')[index].classList.add('active');
-  currentIndex = index;
-}
+  function goToSlide(index) {
+    const slideWidth = slides[0].clientWidth;
+    track.style.transform = `translateX(-${slideWidth * index}px)`;
+    document.querySelectorAll('.carousel-dot').forEach(dot => dot.classList.remove('active'));
+    document.querySelectorAll('.carousel-dot')[index].classList.add('active');
+    currentIndex = index;
+  }
 
-function createDots() {
-  slides.forEach((_, i) => {
-    const dot = document.createElement('span');
-    dot.classList.add('carousel-dot');
-    if (i === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => {
-      clearInterval(interval);
-      goToSlide(i);
-      startAutoSlide();
+  function createDots() {
+    slides.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.classList.add('carousel-dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => {
+        clearInterval(interval);
+        goToSlide(i);
+        startAutoSlide();
+      });
+      dotsContainer.appendChild(dot);
     });
-    dotsContainer.appendChild(dot);
-  });
-}
+  }
 
-function nextSlide() {
-  let nextIndex = currentIndex + 1;
-  if (nextIndex >= slides.length) nextIndex = 0;
-  goToSlide(nextIndex);
-}
+  function nextSlide() {
+    let nextIndex = currentIndex + 1;
+    if (nextIndex >= slides.length) nextIndex = 0;
+    goToSlide(nextIndex);
+  }
 
-function startAutoSlide() {
-  interval = setInterval(nextSlide, 1500); // show each for 1.5 seconds
-}
+  function startAutoSlide() {
+    interval = setInterval(nextSlide, 1500); // 1.5 seconds per slide
+  }
 
-createDots();
-startAutoSlide();
+  createDots();
+  startAutoSlide();
   </script>
   <!-- JotForm loads after scroll -->
   <script
